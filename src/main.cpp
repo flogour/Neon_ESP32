@@ -86,7 +86,7 @@ void setAnimation(int mode) {
   {
   case 1:
     fill_solid(leds, NUM_LEDS, CRGB(0, 0, 0));
-    //for(int j=0; j<= 50; j++){
+    for(int j=0; j<= 3; j++){
       for (int i=0 ; i<= NUM_LEDS; i++){
         leds[i] = CRGB (r, g, b);
         FastLED.show();
@@ -98,7 +98,7 @@ void setAnimation(int mode) {
         FastLED.show();
         delay(10);
       }
-    //}
+    }
     break;
   
   default:
