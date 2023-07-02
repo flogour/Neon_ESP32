@@ -99,6 +99,7 @@ void setAnimation(int mode) {
         delay(10);
       }
     }
+    fill_solid(leds, NUM_LEDS, CRGB(r, g, b));
     break;
   
   default:
