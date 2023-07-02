@@ -19,7 +19,6 @@ WebServer server(80);
 int red = 0;
 int green = 0;
 int blue = 0;
-int test;
 
 int r;
 int g;
