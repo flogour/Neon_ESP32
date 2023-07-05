@@ -76,6 +76,13 @@ const char* index_html = R"html(
 
 
 
+void handleRoot();
+void handleColor();
+void setLedColor(int r, int g, int b);
+void handleAnimation();
+void setAnimation(int mode);
+void pride();
+
 
 
 void setup() {
@@ -179,8 +186,7 @@ void setAnimation(int mode) {
 
 
 
-void pride() 
-{
+void pride() {
   static uint16_t sPseudotime = 0;
   static uint16_t sLastMillis = 0;
   static uint16_t sHue16 = 0;
