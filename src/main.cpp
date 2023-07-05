@@ -1,4 +1,4 @@
-#include <WiFi.h>
+//#include <WiFi.h>
 #include <WebServer.h>
 #include <FastLED.h>
 //#include <Arduino.h>
