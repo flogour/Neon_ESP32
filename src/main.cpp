@@ -98,6 +98,8 @@ void handleAnimation();
 void setBrightness();
 void setAnimation(int mode);
 void pride();
+void va_et_vient();
+void arc_en_ciel();
 
 
 
@@ -177,36 +179,50 @@ void setAnimation(int mode) {
 
   switch (animationMode)
   {
-  case 1:
-    fill_solid(leds, NUM_LEDS, CRGB(0, 0, 0));
-    for(int j=0; j<= 3; j++){
-      for (int i=0 ; i<= NUM_LEDS; i++){
-        leds[i] = CRGB (r, g, b);
-        FastLED.show();
-        delay(10);
-      }
-
-      for (int i=NUM_LEDS ; i>= 0; i--){
-        leds[i] = CRGB (0, 0, 0);
-        FastLED.show();
-        delay(10);
-      }
-    }
-    fill_solid(leds, NUM_LEDS, CRGB(r, g, b));
-    FastLED.show();
-    break;
-  
-  case 2:
-    pride();
-    FastLED.show();
-    break;
-  
-  default:
-    break;
+    case 1:
+      fill_solid(leds, NUM_LEDS, CRGB(0, 0, 0));
+      va_et_vient();
+      fill_solid(leds, NUM_LEDS, CRGB(r, g, b));
+      FastLED.show();
+      break;
+    
+    case 2:
+      arc_en_ciel();
+      FastLED.show();
+      break;
+    
+    case 3:
+      pride();
+      FastLED.show();
+      break;
+    
+    default:
+      break;
   }
 }
 
+void arc_en_ciel(){
+  
+}
 
+void va_et_vient(){
+  for(int j=0; j<= 3; j++){
+    for (int i=0 ; i<= NUM_LEDS; i++){
+      leds[i] = CRGB (r, g, b);
+      FastLED.show();
+      delay(10);
+      server.handleClient();
+    }
+
+    for (int i=NUM_LEDS ; i>= 0; i--){
+      leds[i] = CRGB (0, 0, 0);
+      FastLED.show();
+      delay(10);
+      server.handleClient();
+    }
+    server.handleClient();
+  }
+}
 
 void pride() {
   static uint16_t sPseudotime = 0;
