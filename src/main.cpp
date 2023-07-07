@@ -26,6 +26,7 @@ int b;
 
 // Variables pour les animations
 int animationMode = 0;
+int brightness = 255;
 
 // Déclaration de la variable contenant le code HTML
 const char* index_html = R"html(
@@ -52,6 +53,13 @@ const char* index_html = R"html(
         <option value="6">Animation 6</option>
     </select>
 
+    <h3>Luminosite</h3>
+    <form>
+    <label for='brightness'>Luminosité:</label>
+    <input type='range' id='brightness' min='0' max='255' value='" + String(brightness) + "'><br>
+    <button type='button' onclick='setBrightness()'>Définir la luminosité</button>
+    </form>
+
     <script>
         function updateColor() {
             var color = document.getElementById("colorPicker").value;
@@ -69,6 +77,13 @@ const char* index_html = R"html(
             xhr.open("GET", "/animation?mode=" + mode, true);
             xhr.send();
         }
+
+        function setBrightness(){
+          var brightness = document.getElementById('brightness').value;
+          var xhr = new XMLHttpRequest();
+          xhr.open('GET', '&brightness=' + brightness, true);
+          xhr.send();
+        }
     </script>
 </body>
 </html>
@@ -80,6 +95,7 @@ void handleRoot();
 void handleColor();
 void setLedColor(int r, int g, int b);
 void handleAnimation();
+void setBrightness();
 void setAnimation(int mode);
 void pride();
 
@@ -146,6 +162,12 @@ void handleAnimation() {
   int mode = server.arg("mode").toInt();
   setAnimation(mode);
   server.send(200, "text/plain", "Animation définie !");
+}
+
+void setBrightness(){
+  brightness = server.arg("brightness").toInt();
+  FastLED.setBrightness(brightness);
+  server.send(200, "text/plain", "Luminosité définies !");
 }
 
 // Fonction pour définir l'animation des LEDs
