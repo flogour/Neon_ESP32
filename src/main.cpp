@@ -81,7 +81,7 @@ const char* index_html = R"html(
         function setBrightness(){
           var brightness = document.getElementById('brightness').value;
           var xhr = new XMLHttpRequest();
-          xhr.open('GET', '&brightness=' + brightness, true);
+          xhr.open("GET", '/brightness?brightness=' + brightness, true);
           xhr.send();
         }
     </script>
@@ -169,6 +169,7 @@ void handleAnimation() {
 void setBrightness(){
   brightness = server.arg("brightness").toInt();
   FastLED.setBrightness(brightness);
+  FastLED.show();
   server.send(200, "text/plain", "Luminosité définies !");
 }
 
