@@ -12,17 +12,20 @@
             margin: 0 auto;
         }
 
-        /*Centrer verticalement*/
         .container_lum {
-            position: relative;
-            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 140vh;
         }
-        
+
+        .centered-content_lum {      
+            transform: translate(-50%, -50%);
+        }
+
         .centered-content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-100%, -50%);
+            margin-bottom: 100px;
         }
 
         /* centrer horizontalement*/
@@ -33,16 +36,6 @@
             margin: 0 auto;
         }
 
-        .container_on_off {
-            position: relative;
-            height: 1vh;
-        }
-        .centered-content_on_off {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
 
         /* The switch - the box around the slider */
         .switch {
@@ -103,23 +96,22 @@
 
     <div class="container_lum">
         <div class="centered-content">
-            <!-- Contenu centré -->
-            <form>
-                <input type='range' class="luminosite-style" id='brightness' min='0' max='255' value='%d'><br>
-                <button type='button' onclick='setBrightness()' class="luminosite-style">Définir la luminosité</button>
-            </form>
+            <div class="centered-content_lum">
+                <!-- Contenu centré -->
+                <form>
+                    <input type='range' class="luminosite-style" onclick='setBrightness()' id='brightness' min='0' max='255' value='%d'><br>
+                    <!-- <button type='button' onclick='setBrightness()' class="luminosite-style">Définir la luminosité</button> -->
+                </form>
+            </div>
         </div>
-    </div>
 
-    <div class="container_on_off">
-        <div class="centered-content_on_off">
-            <!-- Contenu centré -->
+        <div class="centered-content">
             <label class="switch">
                 <input type="checkbox">
                 <span class="slider"></span>
             </label>
         </div>
-    </div>
-    
+
+    </div>  
 <body>
 </html>
