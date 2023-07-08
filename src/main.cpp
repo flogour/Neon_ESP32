@@ -65,7 +65,7 @@ const char* index_html = R"html(
     </form>
 
     <h3>Extinction auto</h3>
-    <button type='button' onclick="eteindre()"> 10 min </button>
+    <button type='button' onclick="eteindre()"> 15min </button>
 
     <script>
         function updateColor() {
@@ -149,7 +149,7 @@ void loop() {
 
   // Ajoutez ici le code pour les animations du ruban LED
   temps2 = millis();
-  if(extinction == 1 && temps2 >= (temps1+60000)){
+  if(extinction == 1 && temps2 >= (temps1+900000)){
     fill_solid(leds, NUM_LEDS, CRGB(0, 0, 0));
     FastLED.show();
     extinction = 0;
