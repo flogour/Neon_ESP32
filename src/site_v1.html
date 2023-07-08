@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Contrôle du ruban LED</title>
+</head>
+<body>
+    <h1>Contrôle du ruban LED</h1>
+
+    <h2>Couleur</h2>
+    <input type="color" id="colorPicker" value="#000000" onchange="updateColor()">
+
+    <h2>Animation</h2>
+    <select id="animationSelect" onchange="updateAnimation()">
+        <option value="0">Aucune</option>
+        <option value="1">Animation 1</option>
+        <option value="2">Animation 2</option>
+        <option value="3">Animation 3</option>
+        <option value="4">Animation 4</option>
+        <option value="5">Animation 5</option>
+        <option value="6">Animation 6</option>
+    </select>
+
+    <h3>Luminosite</h3>
+    <form>
+    <label for='brightness'>Luminosité:</label>
+    <input type='range' onclick='setBrightness()' id='brightness' min='0' max='255' value='%d'><br>
+    <!-- <button type='button' onclick='setBrightness()'>Définir la luminosité</button> -->
+    </form>
+
+    <script>
+        function updateColor() {
+            var color = document.getElementById("colorPicker").value;
+            var red = parseInt(color.substr(1, 2), 16);
+            var green = parseInt(color.substr(3, 2), 16);
+            var blue = parseInt(color.substr(5, 2), 16);
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/color?r=" + red + "&g=" + green + "&b=" + blue, true);
+            xhr.send();
+        }
+
+        function updateAnimation() {
+            var mode = document.getElementById("animationSelect").value;
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/animation?mode=" + mode, true);
+            xhr.send();
+        }
+
+        function setBrightness(){
+          var brightness = document.getElementById('brightness').value;
+          var xhr = new XMLHttpRequest();
+          xhr.open("GET", '/brightness?brightness=' + brightness, true);
+          xhr.send();
+        }
+    </script>
+</body>
+</html>

@@ -56,8 +56,9 @@ const char* index_html = R"html(
     <h3>Luminosite</h3>
     <form>
     <label for='brightness'>Luminosité:</label>
-    <input type='range' id='brightness' min='0' max='255' value='%d'><br>
-    <button type='button' onclick='setBrightness()'>Définir la luminosité</button>
+    <!-- <input type='range' id='brightness' min='0' max='255' value='%d'><br> -->
+    <input type='range' onclick='setBrightness()' id='brightness' min='0' max='255' value='%d'><br>
+    <!-- <button type='button' onclick='setBrightness()'>Définir la luminosité</button> -->
     </form>
 
     <script>

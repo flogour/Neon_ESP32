@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Contrôle du ruban LED</title>
+    <style>
+        
+        .image-style{
+            width: 35%;
+            
+            display: block;
+            margin: 0 auto;
+        }
+
+        /*Centrer verticalement*/
+        .container_lum {
+            position: relative;
+            height: 100vh;
+        }
+        
+        .centered-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-100%, -50%);
+        }
+
+        /* centrer horizontalement*/
+        .luminosite-style{
+            width: 200%;
+            
+            display: block;
+            margin: 0 auto;
+        }
+
+        .container_on_off {
+            position: relative;
+            height: 1vh;
+        }
+        .centered-content_on_off {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* The switch - the box around the slider */
+        .switch {
+        font-size: 17px;
+        position: relative;
+        display: inline-block;
+        width: 20em;
+        height: 2em;
+        }
+
+        /* Hide default HTML checkbox */
+        .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+        }
+
+        /* The slider */
+        .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        box-shadow: inset 2px 5px 10px rgba(0,0,0,0.3);
+        transition: .4s;
+        border-radius: 5px;
+        }
+
+        .slider:before {
+        position: absolute;
+        content: "";
+        height: 1.4em;
+        width: 0.1em;
+        border-radius: 0px;
+        left: 0.3em;
+        bottom: 0.3em;
+        background-color: white;
+        transition: .6s;
+        }
+
+        input:checked + .slider {
+        background-color: #171717;
+        box-shadow: inset 2px 5px 10px rgb(0, 0, 0);
+        }
+
+        input:checked + .slider:before {
+        transform: translateX(19em) rotate(180deg);
+        }
+
+
+    </style>
+</head>
+</body>
+    <img src="C:\Users\flore\Documents\Modèle_3D\Néon\Max_Flo_VF.png" class="image-style">
+
+    <div class="container_lum">
+        <div class="centered-content">
+            <!-- Contenu centré -->
+            <form>
+                <input type='range' class="luminosite-style" id='brightness' min='0' max='255' value='%d'><br>
+                <button type='button' onclick='setBrightness()' class="luminosite-style">Définir la luminosité</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="container_on_off">
+        <div class="centered-content_on_off">
+            <!-- Contenu centré -->
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider"></span>
+            </label>
+        </div>
+    </div>
+    
+<body>
+</html>
