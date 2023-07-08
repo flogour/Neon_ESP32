@@ -27,6 +27,9 @@ int b;
 // Variables pour les animations
 int animationMode = 0;
 int brightness = 255;
+int extinction;
+double temps1 = 0;
+double temps2 = 0;
 
 // Déclaration de la variable contenant le code HTML
 const char* index_html = R"html(
@@ -39,10 +42,10 @@ const char* index_html = R"html(
 <body>
     <h1>Contrôle du ruban LED</h1>
 
-    <h2>Couleur</h2>
+    <h3>Couleur</h3>
     <input type="color" id="colorPicker" value="#000000" onchange="updateColor()">
 
-    <h2>Animation</h2>
+    <h3>Animation</h3>
     <select id="animationSelect" onchange="updateAnimation()">
         <option value="0">Aucune</option>
         <option value="1">Animation 1</option>
@@ -60,6 +63,9 @@ const char* index_html = R"html(
     <input type='range' onclick='setBrightness()' id='brightness' min='0' max='255' value='%d'><br>
     <!-- <button type='button' onclick='setBrightness()'>Définir la luminosité</button> -->
     </form>
+
+    <h3>Extinction auto</h3>
+    <button type='button' onclick="eteindre()"> 10 min </button>
 
     <script>
         function updateColor() {
@@ -85,6 +91,12 @@ const char* index_html = R"html(
           xhr.open("GET", '/brightness?brightness=' + brightness, true);
           xhr.send();
         }
+
+        function eteindre(){
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", '/eteindre?appuyer=1', true);
+            xhr.send();
+        }
     </script>
 </body>
 </html>
@@ -98,6 +110,7 @@ void setLedColor(int r, int g, int b);
 void handleAnimation();
 void setBrightness();
 void setAnimation(int mode);
+void set_extinction();
 void pride();
 void va_et_vient();
 void arc_en_ciel();
@@ -121,6 +134,7 @@ void setup() {
   server.on("/color", handleColor);
   server.on("/animation", handleAnimation);
   server.on("/brightness", setBrightness);
+  server.on("/eteindre", set_extinction);
 
   // Démarrage du serveur web
   server.begin();
@@ -134,6 +148,12 @@ void loop() {
   server.handleClient();
 
   // Ajoutez ici le code pour les animations du ruban LED
+  temps2 = millis();
+  if(extinction == 1 && temps2 >= (temps1+60000)){
+    fill_solid(leds, NUM_LEDS, CRGB(0, 0, 0));
+    FastLED.show();
+    extinction = 0;
+  }
 }
 
 
@@ -202,6 +222,11 @@ void setAnimation(int mode) {
     default:
       break;
   }
+}
+
+void set_extinction(){
+  extinction = server.arg("appuyer").toInt();
+  temps1 = millis();
 }
 
 void arc_en_ciel(){
