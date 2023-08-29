@@ -399,10 +399,11 @@ void setup() {
   // Routes du serveur web
   server.on("/", handleRoot);
   server.on("/style.css", handleCss);
-  server.on("/color", handleColor);
+
+  /*server.on("/color", handleColor);
   server.on("/animation", handleAnimation);
   server.on("/brightness", setBrightness);
-  server.on("/eteindre", set_extinction);
+  server.on("/eteindre", set_extinction);*/
 
   // Démarrage du serveur web
   server.begin();
