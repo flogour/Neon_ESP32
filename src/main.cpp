@@ -34,344 +34,77 @@ double temps2 = 0;
 // Déclaration de la variable contenant le code HTML
 const char* index_html = R"html(
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neon Control</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <link rel="icon" href="./img/logo.jpg">
+    <title>Contrôle du ruban LED</title>
 </head>
 <body>
-    <header id="header">
-        <div>
-            <a href="#home"><img src="./img/titleWhite.png" alt="Max & Flo"></a>
-            <label class="switch">
-                <input type="checkbox">
-                <span class="slider round"></span>
-            </label>
-        </div>
-        <nav>
-            <ul>
-                <li><a href="#home">HOME</a></li>
-                <li><a href="#lights">LIGHTS</a></li>
-                <li><a href="#timer">TIMER</a></li>
-            </ul>
-        </nav>
-    </header>
-    <div class="page1" id="home">
-        <div class="neonControl">
-            <h1>NEON</h1>
-            <h2>CONTROL</h2>
-        </div>
-        <div class="luminosity">
-            <h3>LUMINOSITY</h3>
-            <div>
-                <input type="range" min="0" max="100" value="50" step="1" id="slider">
-                <div id="number" class="neonTextWhite">50</div>
-            </div>
-        </div>
-    </div>
-    <div class="page2" id="lights">
-        page 2
-    </div>
-    <div class="transition">TIMER</div>
-    <div class="page3" id="timer">
-        page 3
-    </div>
-    <footer>
-        <h3>Website developed by Max & flo</h3>
-        <p>Neon Control - v1</p>
-    </footer>
+    <h1>Contrôle du ruban LED</h1>
+
+    <h3>Couleur</h3>
+    <input type="color" id="colorPicker" value="#000000" onchange="updateColor()">
+
+    <h3>Animation</h3>
+    <select id="animationSelect" onchange="updateAnimation()">
+        <option value="0">Aucune</option>
+        <option value="1">Animation 1</option>
+        <option value="2">Animation 2</option>
+        <option value="3">Animation 3</option>
+        <option value="4">Animation 4</option>
+        <option value="5">Animation 5</option>
+        <option value="6">Animation 6</option>
+    </select>
+
+    <h3>Luminosite</h3>
+    <form>
+    <label for='brightness'>Luminosité:</label>
+    <!-- <input type='range' id='brightness' min='0' max='255' value='%d'><br> -->
+    <input type='range' onclick='setBrightness()' id='brightness' min='0' max='255' value='%d'><br>
+    <!-- <button type='button' onclick='setBrightness()'>Définir la luminosité</button> -->
+    </form>
+
+    <h3>Extinction auto</h3>
+    <button type='button' onclick="eteindre()"> 15min </button>
+
     <script>
-        var slider = document.getElementById("slider");
-        var number = document.getElementById("number");
-        slider.oninput=function(){number.innerHTML = slider.value;}
+        function updateColor() {
+            var color = document.getElementById("colorPicker").value;
+            var red = parseInt(color.substr(1, 2), 16);
+            var green = parseInt(color.substr(3, 2), 16);
+            var blue = parseInt(color.substr(5, 2), 16);
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/color?r=" + red + "&g=" + green + "&b=" + blue, true);
+            xhr.send();
+        }
 
-        var currentScrollPos = window.pageYOffset;
+        function updateAnimation() {
+            var mode = document.getElementById("animationSelect").value;
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/animation?mode=" + mode, true);
+            xhr.send();
+        }
 
-        document.addEventListener("scroll", (event) => {
-            currentScrollPos = window.scrollY;
-            if (currentScrollPos > (Math.round(window.innerHeight)*0.85)) {
-                document.getElementById("header").style.transition = "all 0.5s ease";
-                document.getElementById("header").style.backgroundColor = "rgba(0, 0, 0, 0.95)";
-                // document.getElementById("header").style.backgroundColor = "rgba(36, 16, 88, 0.95)";
-                // document.getElementById("header").style.borderRadius = "0 0 25px 25px";
-            } else {
-                document.getElementById("header").style.transition = "all 0.5s ease";
-                document.getElementById("header").style.backgroundColor = "rgba(36, 16, 88, 0)";
-            }
-        });
+        function setBrightness(){
+          var brightness = document.getElementById('brightness').value;
+          var xhr = new XMLHttpRequest();
+          xhr.open("GET", '/brightness?brightness=' + brightness, true);
+          xhr.send();
+        }
+
+        function eteindre(){
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", '/eteindre?appuyer=1', true);
+            xhr.send();
+        }
     </script>
 </body>
 </html>
 )html";
 
-const char* index_css = R"css(
-  /*------STYLE------*/
 
-/*------VARIABLES------*/
-:root {
-    /* nav */
-    --nav-logo-width: 20%;
-    --nav-bar-width: 70%;
-    --nav-padding: 1.5%;
-    --red:#F43545;
-    --orange: #FF8901;
-    --yellow: #FAD717;
-    --green: #00BA71;
-    --cyan: #00C2DE;
-    --blue: #00418D;
-    --pink: #ff3ae1;
-    --purple: #5F2879;
-}
-/*------ALL FILE------*/
-* {
-    margin: 0;
-    padding: 0;
-    font-family: Tahoma, sans-serif;
-    color: white;
-    transition: all 0.2s ease;
-    scroll-behavior: smooth;
-}
-body {
-    /* background-color:rgba(0, 0, 0, 0.7); */
-}
-.neonTextBlue {
-    color: #fff;
-    text-shadow:
-        0 0 7px #00c8ff,
-        0 0 10px #00c8ff,
-        0 0 21px #00c8ff,
-        0 0 42px #00c8ff,
-        0 0 82px #00c8ff,
-        0 0 92px #00c8ff,
-        0 0 102px #00c8ff,
-        0 0 151px #00c8ff;
-}.neonTextWhite {
-    color: #fff;
-    text-shadow:
-        0 0 7px #fff,
-        0 0 10px #fff,
-        0 0 21px #fff,
-        0 0 42px #fff,
-        0 0 82px #fff,
-        0 0 92px #fff,
-        0 0 102px #000,
-        0 0 151px #000;
-}.neonTextPink {
-    color: #fff;
-    text-shadow:
-        0 0 7px #ea00ff,
-        0 0 10px #ea00ff,
-        0 0 21px #ea00ff,
-        0 0 42px #ea00ff,
-        0 0 82px #ea00ff,
-        0 0 92px #ea00ff,
-        0 0 102px #ea00ff,
-        0 0 151px #ea00ff;
-}
-header {
-    position: fixed;
-    top: 0px;
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    padding-top: var(--nav-padding);
-    padding-bottom: var(--nav-padding);
-    justify-content: space-around;
-} header a { /* LOGO */
-    text-decoration: none;
-} header a img {
-    width: 220px;
-} header div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-/* The switch - the box around the slider */
-.switch {
-    position: relative;
-    display: inline-block;
-    width: 120px;
-    height: 34px;
-    margin-left: 20px;
-}
-/* Hide default HTML checkbox */
-.switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-/* The slider */
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(255, 255, 255, 0.15);
-    -webkit-transition: .4s;
-    transition: .4s;
-    border-radius: 34px;
-}
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    -webkit-transition: .4s;
-    transition: .4s;
-    border-radius: 50%;
-}
-input:checked + .slider {
-    background-color: var(--cyan);
-    box-shadow: 0px 0px 40px 0px rgba(0, 194, 222, 1);
-}
-input:focus + .slider {
-    /* box-shadow: 0 0 1px var(--cyan); */
-}
-input:checked + .slider:before {
-    -webkit-transform: translateX(85px);
-    -ms-transform: translateX(85px);
-    transform: translateX(85px);
-}
-nav { /* NAVBAR BOX */
-    width: var(--nav-bar-width);
-}nav ul{ 
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-}nav ul li{
-    list-style: none;
-    padding-top: 15px;
-}nav ul li:hover {
-    text-shadow:
-        0 0 7px #fff,
-        0 0 10px #fff,
-        0 0 21px #fff,
-        0 0 42px #fff,
-        0 0 82px #fff,
-        0 0 92px #fff,
-        0 0 102px #000,
-        0 0 151px #000;
-}nav ul li a {
-    font-size: 18px;
-    letter-spacing: 8px;
-}
-/*------PAGE 1------*/
-.page1 {
-    height: 100vh;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),url(../img/wallpaper.jpg);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-evenly;
-    /* justify-content: space-evenly; */
-    /* border: 2px solid rgb(200, 23, 23); */
-}.page1 .neonControl {
-    display: flex;
-    align-items: center;
-    /* border: 2px solid black; */
-}.page1 h1 {
-    font-size: 1580%;
-    /* border: 1px solid black; */
-    word-break: break-all;
-    text-align: center;
-    letter-spacing: 5px;
-    display: inline-block;
-    line-height: 200px;
-    width: 50%;
-}.page1 h2 {
-    font-size: 380%;
-    letter-spacing: 16px;
-    display: inline;
-    writing-mode: vertical-lr;
-    padding-top: 3%;
-    /* border: 1px solid black; */
-}.page1 h3 {
-    font-size: 260%;
-    letter-spacing: 16px;
-    display: inline;
-    writing-mode: vertical-lr;
-    margin-right: 20%;
-    /* border: 2px solid rgb(181, 41, 41); */
-}.page1 .luminosity {
-    display: flex;
-    /* width: 200px; */
-    align-items: center;
-    text-align: center;
-    /* border: 2px solid rgb(181, 41, 41); */
-}#number {
-    width: 50px;
-    font-size: 150%;
-    margin-top: 20px;
-    text-align: center;
-}input[type="range"]{
-    -webkit-appearance: slider-vertical;
-    height: 350px;
-    width: 0.1px;
-    border: 2px solid rgb(200, 23, 23);
-}
-
-/*------PAGE 2------*/
-.page2 {
-    height: 100vh;
-    /* border: 2px solid rgb(200, 23, 23); */
-    /* box-shadow: 0px -20px 40px rgba(0, 0, 0, 0.5); */
-}
-
-/*------TRANSITION------*/
-.transition {
-    height: 30vh;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),url(../img/wallpaper.jpg);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 380%;
-    letter-spacing: 20px;
-    /* border: 2px solid rgb(200, 23, 23); */
-    /* box-shadow: 0px 20px -40px rgba(0, 0, 0, 0.5); */
-}
-
-/*------PAGE 3------*/
-.page3 {
-    height: 100vh;
-    /* border: 2px solid rgb(200, 23, 23); */
-}
-
-/*------FOOTER------*/
-footer {
-    height: 25vh;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),url(../img/wallpaper.jpg);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    font-style: italic;
-    /* font-weight: lighter; */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    /* border: 2px solid rgb(200, 23, 23); */
-}
-)css";
 
 void handleRoot();
-void handleCss();
 void handleColor();
 void setLedColor(int r, int g, int b);
 void handleAnimation();
@@ -398,12 +131,10 @@ void setup() {
 
   // Routes du serveur web
   server.on("/", handleRoot);
-  server.on("/style.css", handleCss);
-
-  /*server.on("/color", handleColor);
+  server.on("/color", handleColor);
   server.on("/animation", handleAnimation);
   server.on("/brightness", setBrightness);
-  server.on("/eteindre", set_extinction);*/
+  server.on("/eteindre", set_extinction);
 
   // Démarrage du serveur web
   server.begin();
@@ -433,10 +164,6 @@ void loop() {
 void handleRoot() {
   String htmlContent = String(index_html);
   server.send(200, "text/html", htmlContent);
-}
-void handleCss(){
-  String cssContent = String(index_css);
-  server.send(200, "text/css", cssContent);
 }
 
 // Route pour définir la couleur des LEDs
