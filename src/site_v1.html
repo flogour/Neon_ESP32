@@ -23,13 +23,14 @@
 
     <h3>Luminosite</h3>
     <form>
-    <!-- <label for='brightness'>Luminosité:</label>-->
+    <label for='brightness'>Luminosité:</label>
+    <!-- <input type='range' id='brightness' min='0' max='255' value='%d'><br> -->
     <input type='range' onclick='setBrightness()' id='brightness' min='0' max='255' value='%d'><br>
     <!-- <button type='button' onclick='setBrightness()'>Définir la luminosité</button> -->
     </form>
 
     <h3>Extinction auto</h3>
-    <button type='button' onclick="eteindre()"> 10 min </button>
+    <button type='button' onclick="eteindre()"> 15min </button>
 
     <script>
         function updateColor() {

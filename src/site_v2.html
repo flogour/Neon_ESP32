@@ -1,117 +1,72 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Contrôle du ruban LED</title>
-    <style>
-        
-        .image-style{
-            width: 35%;
-            
-            display: block;
-            margin: 0 auto;
-        }
-
-        .container_lum {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 140vh;
-        }
-
-        .centered-content_lum {      
-            transform: translate(-50%, -50%);
-        }
-
-        .centered-content {
-            margin-bottom: 100px;
-        }
-
-        /* centrer horizontalement*/
-        .luminosite-style{
-            width: 200%;
-            
-            display: block;
-            margin: 0 auto;
-        }
-
-
-        /* The switch - the box around the slider */
-        .switch {
-        font-size: 17px;
-        position: relative;
-        display: inline-block;
-        width: 20em;
-        height: 2em;
-        }
-
-        /* Hide default HTML checkbox */
-        .switch input {
-        opacity: 0;
-        width: 0;
-        height: 0;
-        }
-
-        /* The slider */
-        .slider {
-        position: absolute;
-        cursor: pointer;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: #ccc;
-        box-shadow: inset 2px 5px 10px rgba(0,0,0,0.3);
-        transition: .4s;
-        border-radius: 5px;
-        }
-
-        .slider:before {
-        position: absolute;
-        content: "";
-        height: 1.4em;
-        width: 0.1em;
-        border-radius: 0px;
-        left: 0.3em;
-        bottom: 0.3em;
-        background-color: white;
-        transition: .6s;
-        }
-
-        input:checked + .slider {
-        background-color: #171717;
-        box-shadow: inset 2px 5px 10px rgb(0, 0, 0);
-        }
-
-        input:checked + .slider:before {
-        transform: translateX(19em) rotate(180deg);
-        }
-
-
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Control</title>
+    <link rel="stylesheet" href="./style/style.css">
+    <link rel="icon" href="./img/logo.jpg">
 </head>
-</body>
-    <img src="C:\Users\flore\Documents\Modèle_3D\Néon\Max_Flo_VF.png" class="image-style">
-
-    <div class="container_lum">
-        <div class="centered-content">
-            <div class="centered-content_lum">
-                <!-- Contenu centré -->
-                <form>
-                    <input type='range' class="luminosite-style" onclick='setBrightness()' id='brightness' min='0' max='255' value='%d'><br>
-                    <!-- <button type='button' onclick='setBrightness()' class="luminosite-style">Définir la luminosité</button> -->
-                </form>
-            </div>
-        </div>
-
-        <div class="centered-content">
+<body>
+    <header id="header">
+        <div>
+            <a href="#home"><img src="./img/titleWhite.png" alt="Max & Flo"></a>
             <label class="switch">
                 <input type="checkbox">
-                <span class="slider"></span>
+                <span class="slider round"></span>
             </label>
         </div>
+        <nav>
+            <ul>
+                <li><a href="#home">HOME</a></li>
+                <li><a href="#lights">LIGHTS</a></li>
+                <li><a href="#timer">TIMER</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="page1" id="home">
+        <div class="neonControl">
+            <h1>NEON</h1>
+            <h2>CONTROL</h2>
+        </div>
+        <div class="luminosity">
+            <h3>LUMINOSITY</h3>
+            <div>
+                <input type="range" min="0" max="100" value="50" step="1" id="slider">
+                <div id="number" class="neonTextWhite">50</div>
+            </div>
+        </div>
+    </div>
+    <div class="page2" id="lights">
+        page 2
+    </div>
+    <div class="transition">TIMER</div>
+    <div class="page3" id="timer">
+        page 3
+    </div>
+    <footer>
+        <h3>Website developed by Max & flo</h3>
+        <p>Neon Control - v1</p>
+    </footer>
+    <script>
+        var slider = document.getElementById("slider");
+        var number = document.getElementById("number");
+        slider.oninput=function(){number.innerHTML = slider.value;}
 
-    </div>  
-<body>
+        var currentScrollPos = window.pageYOffset;
+
+        document.addEventListener("scroll", (event) => {
+            currentScrollPos = window.scrollY;
+            if (currentScrollPos > (Math.round(window.innerHeight)*0.85)) {
+                document.getElementById("header").style.transition = "all 0.5s ease";
+                document.getElementById("header").style.backgroundColor = "rgba(0, 0, 0, 0.95)";
+                // document.getElementById("header").style.backgroundColor = "rgba(36, 16, 88, 0.95)";
+                // document.getElementById("header").style.borderRadius = "0 0 25px 25px";
+            } else {
+                document.getElementById("header").style.transition = "all 0.5s ease";
+                document.getElementById("header").style.backgroundColor = "rgba(36, 16, 88, 0)";
+            }
+        });
+    </script>
+</body>
 </html>

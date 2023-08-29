@@ -34,69 +34,74 @@ double temps2 = 0;
 // Déclaration de la variable contenant le code HTML
 const char* index_html = R"html(
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Contrôle du ruban LED</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Control</title>
+    <link rel="stylesheet" href="./style/style.css">
+    <link rel="icon" href="./img/logo.jpg">
 </head>
 <body>
-    <h1>Contrôle du ruban LED</h1>
-
-    <h3>Couleur</h3>
-    <input type="color" id="colorPicker" value="#000000" onchange="updateColor()">
-
-    <h3>Animation</h3>
-    <select id="animationSelect" onchange="updateAnimation()">
-        <option value="0">Aucune</option>
-        <option value="1">Animation 1</option>
-        <option value="2">Animation 2</option>
-        <option value="3">Animation 3</option>
-        <option value="4">Animation 4</option>
-        <option value="5">Animation 5</option>
-        <option value="6">Animation 6</option>
-    </select>
-
-    <h3>Luminosite</h3>
-    <form>
-    <label for='brightness'>Luminosité:</label>
-    <!-- <input type='range' id='brightness' min='0' max='255' value='%d'><br> -->
-    <input type='range' onclick='setBrightness()' id='brightness' min='0' max='255' value='%d'><br>
-    <!-- <button type='button' onclick='setBrightness()'>Définir la luminosité</button> -->
-    </form>
-
-    <h3>Extinction auto</h3>
-    <button type='button' onclick="eteindre()"> 15min </button>
-
+    <header id="header">
+        <div>
+            <a href="#home"><img src="./img/titleWhite.png" alt="Max & Flo"></a>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#home">HOME</a></li>
+                <li><a href="#lights">LIGHTS</a></li>
+                <li><a href="#timer">TIMER</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="page1" id="home">
+        <div class="neonControl">
+            <h1>NEON</h1>
+            <h2>CONTROL</h2>
+        </div>
+        <div class="luminosity">
+            <h3>LUMINOSITY</h3>
+            <div>
+                <input type="range" min="0" max="100" value="50" step="1" id="slider">
+                <div id="number" class="neonTextWhite">50</div>
+            </div>
+        </div>
+    </div>
+    <div class="page2" id="lights">
+        page 2
+    </div>
+    <div class="transition">TIMER</div>
+    <div class="page3" id="timer">
+        page 3
+    </div>
+    <footer>
+        <h3>Website developed by Max & flo</h3>
+        <p>Neon Control - v1</p>
+    </footer>
     <script>
-        function updateColor() {
-            var color = document.getElementById("colorPicker").value;
-            var red = parseInt(color.substr(1, 2), 16);
-            var green = parseInt(color.substr(3, 2), 16);
-            var blue = parseInt(color.substr(5, 2), 16);
-            var xhr = new XMLHttpRequest();
-            xhr.open("GET", "/color?r=" + red + "&g=" + green + "&b=" + blue, true);
-            xhr.send();
-        }
+        var slider = document.getElementById("slider");
+        var number = document.getElementById("number");
+        slider.oninput=function(){number.innerHTML = slider.value;}
 
-        function updateAnimation() {
-            var mode = document.getElementById("animationSelect").value;
-            var xhr = new XMLHttpRequest();
-            xhr.open("GET", "/animation?mode=" + mode, true);
-            xhr.send();
-        }
+        var currentScrollPos = window.pageYOffset;
 
-        function setBrightness(){
-          var brightness = document.getElementById('brightness').value;
-          var xhr = new XMLHttpRequest();
-          xhr.open("GET", '/brightness?brightness=' + brightness, true);
-          xhr.send();
-        }
-
-        function eteindre(){
-            var xhr = new XMLHttpRequest();
-            xhr.open("GET", '/eteindre?appuyer=1', true);
-            xhr.send();
-        }
+        document.addEventListener("scroll", (event) => {
+            currentScrollPos = window.scrollY;
+            if (currentScrollPos > (Math.round(window.innerHeight)*0.85)) {
+                document.getElementById("header").style.transition = "all 0.5s ease";
+                document.getElementById("header").style.backgroundColor = "rgba(0, 0, 0, 0.95)";
+                // document.getElementById("header").style.backgroundColor = "rgba(36, 16, 88, 0.95)";
+                // document.getElementById("header").style.borderRadius = "0 0 25px 25px";
+            } else {
+                document.getElementById("header").style.transition = "all 0.5s ease";
+                document.getElementById("header").style.backgroundColor = "rgba(36, 16, 88, 0)";
+            }
+        });
     </script>
 </body>
 </html>
