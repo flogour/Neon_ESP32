@@ -69,7 +69,7 @@ const char* index_html = R"html(
         <div class="luminosity">
             <h3>LUMINOSITY</h3>
             <div>
-                <input type="range" min="0" max="100" value="50" step="1" id="slider">
+                <input type="range" onclick='setBrightness()' id="slider" min="0" max="255" value='%d' step="1">
                 <div id="number" class="neonTextWhite">50</div>
             </div>
         </div>
@@ -104,6 +104,13 @@ const char* index_html = R"html(
                 document.getElementById("header").style.backgroundColor = "rgba(36, 16, 88, 0)";
             }
         });
+
+        function setBrightness(){
+          var brightness = document.getElementById('slider').value;
+          var xhr = new XMLHttpRequest();
+          xhr.open("GET", '/slider?slider=' + slider, true);
+          xhr.send();
+        }
     </script>
 </body>
 </html>
@@ -416,6 +423,8 @@ void setup() {
   server.on("/logo.jpg", handleLogo);
   server.on("/titleWhite.png", handleTitle);
   server.on("/wallpaper.jpg", handleWallpaper);
+
+  server.on("/slider", setBrightness);
 
   /*server.on("/color", handleColor);
   server.on("/animation", handleAnimation);
