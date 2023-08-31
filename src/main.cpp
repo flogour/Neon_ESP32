@@ -69,7 +69,7 @@ const char* index_html = R"html(
         <div class="luminosity">
             <h3>LUMINOSITY</h3>
             <div>
-                <input type="range" onclick='setBrightness()' id="slider" min="0" max="255" value='%d' step="1">
+                <input type='range' onclick='setBrightness()' id='brightness' min='0' max='255' value='%d' step="1">
                 <div id="number" class="neonTextWhite">50</div>
             </div>
         </div>
@@ -86,7 +86,7 @@ const char* index_html = R"html(
         <p>Neon Control - v1</p>
     </footer>
     <script>
-        var slider = document.getElementById("slider");
+        var slider = document.getElementById('brightness');
         var number = document.getElementById("number");
         slider.oninput=function(){number.innerHTML = slider.value;}
 
@@ -106,9 +106,9 @@ const char* index_html = R"html(
         });
 
         function setBrightness(){
-          var brightness = document.getElementById('slider').value;
+          var brightness = document.getElementById('brightness').value;
           var xhr = new XMLHttpRequest();
-          xhr.open("GET", '/slider?slider=' + slider, true);
+          xhr.open("GET", '/brightness?brightness=' + brightness, true);
           xhr.send();
         }
     </script>
@@ -424,7 +424,7 @@ void setup() {
   server.on("/titleWhite.png", handleTitle);
   server.on("/wallpaper.jpg", handleWallpaper);
 
-  server.on("/slider", setBrightness);
+  server.on("/brightness", setBrightness);
 
   /*server.on("/color", handleColor);
   server.on("/animation", handleAnimation);
@@ -509,10 +509,11 @@ void handleAnimation() {
 }
 
 void setBrightness(){
-  brightness = server.arg("brightness").toInt();
-  FastLED.setBrightness(brightness);
-  FastLED.show();
-  server.send(200, "text/plain", "Luminosité définies !");
+    fill_solid(leds, NUM_LEDS, CRGB(255, 0, 0));
+    brightness = server.arg("brightness").toInt();
+    FastLED.setBrightness(brightness);
+    FastLED.show();
+    server.send(200, "text/plain", "Luminosité définies !");
 }
 
 // Fonction pour définir l'animation des LEDs
