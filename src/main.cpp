@@ -49,7 +49,7 @@ const char* index_html = R"html(
         <div>
             <a href="#home"><img src="titleWhite.png" alt="Max & Flo"></a>
             <label class="switch">
-                <input type="checkbox">
+                <input type="checkbox" id="switch_on_off" >
                 <span class="slider round"></span>
             </label>
         </div>
@@ -70,7 +70,7 @@ const char* index_html = R"html(
             <h3>LUMINOSITY</h3>
             <div>
                 <input type='range' onclick='setBrightness()' id='brightness' min='0' max='255' value='%d' step="1">
-                <div id="number" class="neonTextWhite">50</div>
+                <div id="number" class="neonTextWhite">127</div>
             </div>
         </div>
     </div>
@@ -111,6 +111,22 @@ const char* index_html = R"html(
           xhr.open("GET", '/brightness?brightness=' + brightness, true);
           xhr.send();
         }
+
+        const switchElement = document.getElementById("switch_on_off");
+        var switchState = 0;
+
+        switchElement.addEventListener("change",function(){
+            if(this.checked){
+                switchState = 1;
+            }else{
+                switchState = 0;
+            }
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", '/switchState?switchState=' + switchState, true);
+            xhr.send();
+
+        });
     </script>
 </body>
 </html>
@@ -384,6 +400,7 @@ void handleCss();
 void handleLogo();
 void handleTitle();
 void handleWallpaper();
+void on_off();
 
 void handleColor();
 void setLedColor(int r, int g, int b);
@@ -425,6 +442,7 @@ void setup() {
   server.on("/wallpaper.jpg", handleWallpaper);
 
   server.on("/brightness", setBrightness);
+  server.on("/switchState", on_off);
 
   /*server.on("/color", handleColor);
   server.on("/animation", handleAnimation);
@@ -484,6 +502,21 @@ void handleWallpaper(){
   File file = SPIFFS.open("/wallpaper.jpg", "r");
   server.streamFile(file, "wallpaper/jpg");
   file.close();
+}
+
+void on_off(){
+    int etat_switch = server.arg("switchState").toInt();
+    if(etat_switch == 1){
+        fill_solid(leds, NUM_LEDS, CRGB(255, 0, 0));
+        //fill_solid(leds, NUM_LEDS, CRGB(r, g, b));
+        FastLED.setBrightness(255);
+    }
+    else{
+        FastLED.setBrightness(0);
+    }
+    
+    FastLED.show();
+    server.send(200, "text/plain", "Néon allumé !");
 }
 
 // Route pour définir la couleur des LEDs
