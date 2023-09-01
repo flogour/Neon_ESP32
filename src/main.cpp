@@ -28,7 +28,7 @@ int b;
 
 // Variables pour les animations
 int animationMode = 0;
-int brightness = 255;
+int brightness = 127;
 int extinction;
 double temps1 = 0;
 double temps2 = 0;
@@ -69,7 +69,7 @@ const char* index_html = R"html(
         <div class="luminosity">
             <h3>LUMINOSITY</h3>
             <div>
-                <input type='range' onclick='setBrightness()' id='brightness' min='0' max='255' value='%d' step="1">
+                <input type='range' onclick='setBrightness()' id='brightness' min='10' max='255' value='%d' step="1">
                 <div id="number" class="neonTextWhite">127</div>
             </div>
         </div>
@@ -542,11 +542,11 @@ void handleAnimation() {
 }
 
 void setBrightness(){
-    fill_solid(leds, NUM_LEDS, CRGB(255, 0, 0));
+    //fill_solid(leds, NUM_LEDS, CRGB(255, 0, 0));
     brightness = server.arg("brightness").toInt();
     FastLED.setBrightness(brightness);
     FastLED.show();
-    server.send(200, "text/plain", "Luminosité définies !");
+    server.send(200, "text/plain", "Luminosité définies !"); 
 }
 
 // Fonction pour définir l'animation des LEDs
