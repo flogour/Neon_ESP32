@@ -509,7 +509,7 @@ void on_off(){
     if(etat_switch == 1){
         fill_solid(leds, NUM_LEDS, CRGB(255, 0, 0));
         //fill_solid(leds, NUM_LEDS, CRGB(r, g, b));
-        FastLED.setBrightness(255);
+        FastLED.setBrightness(brightness);
     }
     else{
         FastLED.setBrightness(0);
