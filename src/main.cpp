@@ -75,8 +75,8 @@ const char* index_html = R"html(
         <div class="luminosity">
             <h2>LUMINOSITY</h2>
             <div>
-                <input type="range" onclick='setBrightness()' id='brightness' min="10" max="255" value= '%d' step="1" >
-                <div id="number" class="neonTextWhite">127</div>
+                <input type="range" onclick='setBrightness()' id='brightness' min="1" max="100" value= '%d' step="1" >
+                <div id="number" class="neonTextWhite">50</div>
             </div>
         </div>
     </div>
@@ -106,7 +106,7 @@ const char* index_html = R"html(
         <p>Neon Control - v1</p>
     </footer>
     <script>
-        var slider = document.getElementById("britghness");
+        var slider = document.getElementById("brightness");
         var number = document.getElementById("number");
         slider.oninput=function(){number.innerHTML = slider.value;}
 
@@ -126,6 +126,12 @@ const char* index_html = R"html(
         function setBrightness(){
           var brightness = document.getElementById('brightness').value;
           var xhr = new XMLHttpRequest();
+
+          //brightness = brightness * 2.55;
+          //2.48*x + 7.52;
+          brightness = Math.round(2.48 * brightness + 7.52);
+
+          
           xhr.open("GET", '/brightness?brightness=' + brightness, true);
           xhr.send();
         }
