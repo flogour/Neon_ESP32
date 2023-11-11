@@ -33,6 +33,10 @@ int extinction;
 double temps1 = 0;
 double temps2 = 0;
 
+//changer href css -> style.css
+//changer href icon -> logo.jpg
+//changer src img -> titleWhite.png
+
 // Déclaration de la variable contenant le code HTML
 const char* index_html = R"html(
 <!DOCTYPE html>
@@ -41,15 +45,15 @@ const char* index_html = R"html(
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Neon Control</title>
-    <link rel="stylesheet" href="./style/style.css">
-    <link rel="icon" href="./img/logo.jpg">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="logo.jpg">
 </head>
 <body>
     <header id="header">
         <div>
-            <a href="#home"><img src="./img/titleWhite.png" alt="Max & Flo"></a>
+            <a href="#home"><img src="titleWhite.png" alt="Max & Flo"></a>
             <label class="switch">
-                <input type="checkbox">
+                <input type="checkbox" id="switch_on_off" >
                 <span class="slider round"></span>
             </label>
         </div>
@@ -71,8 +75,8 @@ const char* index_html = R"html(
         <div class="luminosity">
             <h2>LUMINOSITY</h2>
             <div>
-                <input type="range" min="0" max="100" value="50" step="1" id="slider">
-                <div id="number" class="neonTextWhite">50</div>
+                <input type="range" onclick='setBrightness()' id='brightness' min="10" max="255" value= '%d' step="1" >
+                <div id="number" class="neonTextWhite">127</div>
             </div>
         </div>
     </div>
@@ -85,7 +89,9 @@ const char* index_html = R"html(
         <h2>Lights</h2>
     </div>
 
+
     <div class="transition"></div>
+
 
     <div class="page3" id="timer">
         <div class="timer">
@@ -94,12 +100,13 @@ const char* index_html = R"html(
         <h2>Timer</h2>
     </div>
 
+
     <footer>
         <h3>Website developed by Max & flo</h3>
         <p>Neon Control - v1</p>
     </footer>
     <script>
-        var slider = document.getElementById("slider");
+        var slider = document.getElementById("britghness");
         var number = document.getElementById("number");
         slider.oninput=function(){number.innerHTML = slider.value;}
 
@@ -144,8 +151,6 @@ const char* index_html = R"html(
 )html";
 
 const char* index_css = R"css(
-  /*------STYLE------*/
-
 /*------STYLE------*/
 
 /*------VARIABLES------*/
@@ -305,7 +310,7 @@ nav { /* NAVBAR BOX */
 /*------PAGE 1------*/
 .page1 {
     height: 100vh;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),url(../img/wallpaper.jpg);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),url(wallpaper.jpg);
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -370,7 +375,7 @@ nav { /* NAVBAR BOX */
     /* border: 2px solid rgb(200, 23, 23); */
     /* box-shadow: 0px -20px 40px rgba(0, 0, 0, 0.5); */
 }.page2 h2 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),url(../img/wallpaper.jpg);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),url(wallpaper.jpg);
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -388,7 +393,7 @@ nav { /* NAVBAR BOX */
 /*------TRANSITION------*/
 .transition {
     height: 20vh;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),url(../img/wallpaper.jpg);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),url(wallpaper.jpg);
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -411,7 +416,7 @@ nav { /* NAVBAR BOX */
     padding: 2%;
     /* border: 2px solid rgb(200, 23, 23); */
 }.page3 h2 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),url(../img/wallpaper.jpg);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),url(wallpaper.jpg);
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -429,7 +434,7 @@ nav { /* NAVBAR BOX */
 /*------FOOTER------*/
 footer {
     height: 20vh;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),url(../img/wallpaper.jpg);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),url(wallpaper.jpg);
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
