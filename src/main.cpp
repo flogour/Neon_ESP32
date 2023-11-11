@@ -41,15 +41,15 @@ const char* index_html = R"html(
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Neon Control</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <link rel="icon" href="logo.jpg">
+    <link rel="stylesheet" href="./style/style.css">
+    <link rel="icon" href="./img/logo.jpg">
 </head>
 <body>
     <header id="header">
         <div>
-            <a href="#home"><img src="titleWhite.png" alt="Max & Flo"></a>
+            <a href="#home"><img src="./img/titleWhite.png" alt="Max & Flo"></a>
             <label class="switch">
-                <input type="checkbox" id="switch_on_off" >
+                <input type="checkbox">
                 <span class="slider round"></span>
             </label>
         </div>
@@ -61,32 +61,45 @@ const char* index_html = R"html(
             </ul>
         </nav>
     </header>
+
+
     <div class="page1" id="home">
         <div class="neonControl">
             <h1>NEON</h1>
             <h2>CONTROL</h2>
         </div>
         <div class="luminosity">
-            <h3>LUMINOSITY</h3>
+            <h2>LUMINOSITY</h2>
             <div>
-                <input type='range' onclick='setBrightness()' id='brightness' min='10' max='255' value='%d' step="1">
-                <div id="number" class="neonTextWhite">127</div>
+                <input type="range" min="0" max="100" value="50" step="1" id="slider">
+                <div id="number" class="neonTextWhite">50</div>
             </div>
         </div>
     </div>
+
+
     <div class="page2" id="lights">
-        page 2
+        <div>
+            reste ici
+        </div>
+        <h2>Lights</h2>
     </div>
-    <div class="transition">TIMER</div>
+
+    <div class="transition"></div>
+
     <div class="page3" id="timer">
-        page 3
+        <div class="timer">
+            reste ici
+        </div>
+        <h2>Timer</h2>
     </div>
+
     <footer>
         <h3>Website developed by Max & flo</h3>
         <p>Neon Control - v1</p>
     </footer>
     <script>
-        var slider = document.getElementById('brightness');
+        var slider = document.getElementById("slider");
         var number = document.getElementById("number");
         slider.oninput=function(){number.innerHTML = slider.value;}
 
@@ -97,8 +110,6 @@ const char* index_html = R"html(
             if (currentScrollPos > (Math.round(window.innerHeight)*0.85)) {
                 document.getElementById("header").style.transition = "all 0.5s ease";
                 document.getElementById("header").style.backgroundColor = "rgba(0, 0, 0, 0.95)";
-                // document.getElementById("header").style.backgroundColor = "rgba(36, 16, 88, 0.95)";
-                // document.getElementById("header").style.borderRadius = "0 0 25px 25px";
             } else {
                 document.getElementById("header").style.transition = "all 0.5s ease";
                 document.getElementById("header").style.backgroundColor = "rgba(36, 16, 88, 0)";
@@ -135,12 +146,14 @@ const char* index_html = R"html(
 const char* index_css = R"css(
   /*------STYLE------*/
 
+/*------STYLE------*/
+
 /*------VARIABLES------*/
 :root {
     /* nav */
     --nav-logo-width: 20%;
     --nav-bar-width: 70%;
-    --nav-padding: 1.5%;
+    --nav-padding: 1%;
     --red:#F43545;
     --orange: #FF8901;
     --yellow: #FAD717;
@@ -205,6 +218,7 @@ header {
     padding-top: var(--nav-padding);
     padding-bottom: var(--nav-padding);
     justify-content: space-around;
+    align-items: baseline;
 } header a { /* LOGO */
     text-decoration: none;
 } header a img {
@@ -218,9 +232,9 @@ header {
 .switch {
     position: relative;
     display: inline-block;
-    width: 120px;
-    height: 34px;
-    margin-left: 20px;
+    width: 220px;
+    height: 30px;
+    /* margin-left: 20px; */
 }
 /* Hide default HTML checkbox */
 .switch input {
@@ -237,20 +251,20 @@ header {
     right: 0;
     bottom: 0;
     background-color: rgba(255, 255, 255, 0.15);
-    -webkit-transition: .4s;
-    transition: .4s;
-    border-radius: 34px;
+    -webkit-transition: 1s;
+    transition: 1s;
+    border-radius: 30px;
 }
 .slider:before {
     position: absolute;
     content: "";
-    height: 26px;
-    width: 26px;
+    height: 24px;
+    width: 24px;
     left: 4px;
-    bottom: 4px;
+    bottom: 3px;
     background-color: white;
-    -webkit-transition: .4s;
-    transition: .4s;
+    -webkit-transition: 1s;
+    transition: 1s;
     border-radius: 50%;
 }
 input:checked + .slider {
@@ -261,9 +275,9 @@ input:focus + .slider {
     /* box-shadow: 0 0 1px var(--cyan); */
 }
 input:checked + .slider:before {
-    -webkit-transform: translateX(85px);
-    -ms-transform: translateX(85px);
-    transform: translateX(85px);
+    -webkit-transform: translateX(188px);
+    -ms-transform: translateX(188px);
+    transform: translateX(188px);
 }
 nav { /* NAVBAR BOX */
     width: var(--nav-bar-width);
@@ -285,13 +299,13 @@ nav { /* NAVBAR BOX */
         0 0 102px #000,
         0 0 151px #000;
 }nav ul li a {
-    font-size: 18px;
-    letter-spacing: 8px;
+    font-size: 22px;
+    letter-spacing: 10px;
 }
 /*------PAGE 1------*/
 .page1 {
     height: 100vh;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),url(wallpaper.jpg);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),url(../img/wallpaper.jpg);
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -322,7 +336,7 @@ nav { /* NAVBAR BOX */
     writing-mode: vertical-lr;
     padding-top: 3%;
     /* border: 1px solid black; */
-}.page1 h3 {
+}.page1 .luminosity h2 {
     font-size: 260%;
     letter-spacing: 16px;
     display: inline;
@@ -350,14 +364,31 @@ nav { /* NAVBAR BOX */
 /*------PAGE 2------*/
 .page2 {
     height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 2%;
     /* border: 2px solid rgb(200, 23, 23); */
     /* box-shadow: 0px -20px 40px rgba(0, 0, 0, 0.5); */
+}.page2 h2 {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),url(../img/wallpaper.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    font-size: 1100%;
+    letter-spacing: 30px;
+    display: inline;
+    writing-mode: vertical-lr;
+    margin-right: 20%;
+    /* text-align: left; */
 }
 
 /*------TRANSITION------*/
 .transition {
-    height: 30vh;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),url(wallpaper.jpg);
+    height: 20vh;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),url(../img/wallpaper.jpg);
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -366,7 +397,8 @@ nav { /* NAVBAR BOX */
     justify-content: center;
     align-items: center;
     font-size: 380%;
-    letter-spacing: 20px;
+    letter-spacing: 30px;
+    /* font-weight: bold; */
     /* border: 2px solid rgb(200, 23, 23); */
     /* box-shadow: 0px 20px -40px rgba(0, 0, 0, 0.5); */
 }
@@ -374,13 +406,30 @@ nav { /* NAVBAR BOX */
 /*------PAGE 3------*/
 .page3 {
     height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 2%;
     /* border: 2px solid rgb(200, 23, 23); */
+}.page3 h2 {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),url(../img/wallpaper.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    font-size: 1100%;
+    letter-spacing: 30px;
+    display: inline;
+    writing-mode: vertical-lr;
+    margin-right: 20%;
+    /* text-align: left; */
 }
 
 /*------FOOTER------*/
 footer {
-    height: 25vh;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),url(wallpaper.jpg);
+    height: 20vh;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),url(../img/wallpaper.jpg);
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;

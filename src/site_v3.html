@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Control</title>
+    <link rel="stylesheet" href="./style/style.css">
+    <link rel="icon" href="./img/logo.jpg">
+</head>
+<body>
+    <header id="header">
+        <div>
+            <a href="#home"><img src="./img/titleWhite.png" alt="Max & Flo"></a>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#home">HOME</a></li>
+                <li><a href="#lights">LIGHTS</a></li>
+                <li><a href="#timer">TIMER</a></li>
+            </ul>
+        </nav>
+    </header>
+
+
+
+    <div class="page1" id="home">
+        <div class="neonControl">
+            <h1>NEON</h1>
+            <h2>CONTROL</h2>
+        </div>
+        <div class="luminosity">
+            <h2>LUMINOSITY</h2>
+            <div>
+                <input type="range" min="0" max="100" value="50" step="1" id="slider">
+                <div id="number" class="neonTextWhite">50</div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="page2" id="lights">
+        <div>
+            reste ici
+        </div>
+        <h2>Lights</h2>
+    </div>
+
+
+
+    <div class="transition"></div>
+
+
+
+    <div class="page3" id="timer">
+        <div class="timer">
+            reste ici
+        </div>
+        <h2>Timer</h2>
+    </div>
+
+
+
+    <footer>
+        <h3>Website developed by Max & flo</h3>
+        <p>Neon Control - v1</p>
+    </footer>
+    <script>
+        var slider = document.getElementById("slider");
+        var number = document.getElementById("number");
+        slider.oninput=function(){number.innerHTML = slider.value;}
+
+        var currentScrollPos = window.pageYOffset;
+
+        document.addEventListener("scroll", (event) => {
+            currentScrollPos = window.scrollY;
+            if (currentScrollPos > (Math.round(window.innerHeight)*0.85)) {
+                document.getElementById("header").style.transition = "all 0.5s ease";
+                document.getElementById("header").style.backgroundColor = "rgba(0, 0, 0, 0.95)";
+            } else {
+                document.getElementById("header").style.transition = "all 0.5s ease";
+                document.getElementById("header").style.backgroundColor = "rgba(36, 16, 88, 0)";
+            }
+        });
+    </script>
+</body>
+</html>
