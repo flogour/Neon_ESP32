@@ -604,6 +604,10 @@ void handleAnimation() {
 void setBrightness(){
     //fill_solid(leds, NUM_LEDS, CRGB(255, 0, 0));
     brightness = server.arg("brightness").toInt();
+    if(brightness > 255){
+        brightness = 255;
+    }
+
     FastLED.setBrightness(brightness);
     FastLED.show();
     server.send(200, "text/plain", "Luminosité définies !"); 
