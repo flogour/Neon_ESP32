@@ -85,17 +85,17 @@ const char* index_html = R"html(
                 <h3>COLORS</h3><br><br>
                 <div id="colors_choices">
                     <button><input type="button" value="#F43545" onclick="updateColor_red()" id="b-red"></button>
-                    <button <input type="button" value="#FF8901" onclick="updateColor_orange()" id="b-orange"></button>
-                    <button <input type="button" value="#FAD717" onclick="updateColor_yellow()" id="b-yellow"></button>
-                    <button <input type="button" value="#00BA71" onclick="updateColor_green()" id="b-green"></button>
-                    <button <input type="button" value="#00C2DE" onclick="updateColor_cyan()" id="b-cyan"></button>
-                    <button <input type="button" value="#005ec9" onclick="updateColor_blue()" id="b-blue"></button>
-                    <button <input type="button" value="#ff3ae1" onclick="updateColor_pink()" id="b-pink"></button>
-                    <button <input type="button" value="#71129c" onclick="updateColor_purple()" id="b-purple"></button>
-                    <button <input type="button" value="#fff" onclick="updateColor_white()" id="b-white"></button>
-                    <button <input type="button" value="#fff" onclick="updateColor_white()" id="b-white"></button>
-                    <button <input type="button" value="#fff" onclick="updateColor_white()" id="b-white"></button>
-                    <button <input type="button" value="#fff" onclick="updateColor_white()" id="b-white"></button>
+                    <button><input type="button" value="#FF8901" onclick="updateColor_orange()" id="b-orange"></button>
+                    <button><input type="button" value="#FAD717" onclick="updateColor_yellow()" id="b-yellow"></button>
+                    <button><input type="button" value="#00BA71" onclick="updateColor_green()" id="b-green"></button>
+                    <button><input type="button" value="#00C2DE" onclick="updateColor_cyan()" id="b-cyan"></button>
+                    <button><input type="button" value="#005ec9" onclick="updateColor_blue()" id="b-blue"></button>
+                    <button><input type="button" value="#ff3ae1" onclick="updateColor_pink()" id="b-pink"></button>
+                    <button><input type="button" value="#71129c" onclick="updateColor_purple()" id="b-purple"></button>
+                    <button><input type="button" value="#fff" onclick="updateColor_white()" id="b-white"></button>
+                    <button><input type="button" value="#fff" onclick="updateColor_white()" id="b-white"></button>
+                    <button><input type="button" value="#fff" onclick="updateColor_white()" id="b-white"></button>
+                    <button><input type="button" value="#fff" onclick="updateColor_white()" id="b-white"></button>
                     <button><input type="color" value="#000000" id="color-picker" onchange="updateColor()"></button>
                 </div>
             </div>
