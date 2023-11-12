@@ -84,7 +84,7 @@ const char* index_html = R"html(
             <div id="colors">
                 <h3>COLORS</h3><br><br>
                 <div id="colors_choices">
-                    <button type="button" id="b-red"></button>
+                    <button><input type="button" value="#F43545" id="b-red" onclick="updateColor_red()"></button>
                     <button type="button" id="b-orange"></button>
                     <button type="button" id="b-yellow"></button>
                     <button type="button" id="b-green"></button>
