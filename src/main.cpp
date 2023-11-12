@@ -53,7 +53,7 @@ const char* index_html = R"html(
         <div>
             <a href="#home"><img src="titleWhite.png" alt="Max & Flo"></a>
             <label class="switch">
-                <input type="checkbox" id="switch_on_off" >
+                <input type="checkbox" id="switch_on_off" onclick="checkbox_function()">
                 <span class="slider round"></span>
             </label>
         </div>
@@ -67,6 +67,7 @@ const char* index_html = R"html(
     </header>
 
 
+
     <div class="page1" id="home">
         <div class="neonControl">
             <h1>NEON</h1>
@@ -75,30 +76,62 @@ const char* index_html = R"html(
         <div class="luminosity">
             <h2>LUMINOSITY</h2>
             <div>
-                <input type="range" onclick='setBrightness()' id='brightness' min="1" max="100" value= '%d' step="1" >
+                <input type="range" onclick ='setBrightness()' min="1" max="100" value='%d' step="1" id="brightness">
                 <div id="number" class="neonTextWhite">50</div>
             </div>
         </div>
     </div>
 
 
+
     <div class="page2" id="lights">
-        <div>
-            reste ici
-        </div>
         <h2>Lights</h2>
+        <div id="colors_and_animations">
+            <div id="colors">
+                <h3>COLORS</h3><br><br>
+                <div id="colors_choices">
+                    <button type="button" onclick="updateColor_red" value="#F43545" id="b-red"></button>
+                    <button type="button" onclick="updateColor_orange" value="#FF8901" id="b-orange"></button>
+                    <button type="button" onclick="updateColor_yellow" value="#FAD717" id="b-yellow"></button>
+                    <button type="button" onclick="updateColor_green" value="#00BA71" id="b-green"></button>
+                    <button type="button" onclick="updateColor_cyan" value="#00C2DE" id="b-cyan"></button>
+                    <button type="button" onclick="updateColor_blue" value="#005ec9" id="b-blue"></button>
+                    <button type="button" onclick="updateColor_pink" value="#ff3ae1" id="b-pink"></button>
+                    <button type="button" onclick="updateColor_purple" value="#71129c" id="b-purple"></button>
+                    <button type="button" onclick="updateColor_white" value="#fff" id="b-white"></button>
+                    <button type="button" id="b-white"></button>
+                    <button type="button" id="b-white"></button>
+                    <button type="button" id="b-white"></button>
+                    <button type="button" id="b-red"></button>
+                </div>
+            </div>
+            <div id="animations">
+                <h3>FLOWS</h3><br><br>
+                <div id="animations_choices">
+                    <button type="button" id="nom_du_flow">test</button>
+                    <button type="button" id="nom_du_flow">test</button>
+                    <button type="button" id="nom_du_flow">test</button>
+                    <button type="button" id="nom_du_flow">test</button>
+                    <button type="button" id="nom_du_flow">test</button>
+                    <button type="button" id="nom_du_flow">test</button>
+                </div>
+            </div>
+        </div>
     </div>
+
 
 
     <div class="transition"></div>
 
 
+
     <div class="page3" id="timer">
-        <div class="timer">
+        <h2>Timer</h2>
+        <div>
             reste ici
         </div>
-        <h2>Timer</h2>
     </div>
+
 
 
     <footer>
@@ -122,6 +155,109 @@ const char* index_html = R"html(
                 document.getElementById("header").style.backgroundColor = "rgba(36, 16, 88, 0)";
             }
         });
+
+        function checkbox_function () {
+            if (event.target.checked) {
+                slider.style.pointerEvents = "auto";
+                slider.disabled = false;
+            } else {
+                slider.style.pointerEvents = "none";
+                slider.disabled = true;
+            }
+        }
+
+
+        function updateColor_red() {
+            var color = document.getElementById("b-red").value;
+            var red = parseInt(color.substr(1, 2), 16);
+            var green = parseInt(color.substr(3, 2), 16);
+            var blue = parseInt(color.substr(5, 2), 16);
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/color?r=" + red + "&g=" + green + "&b=" + blue, true);
+            xhr.send();
+        }
+
+        function updateColor_orange() {
+            var color = document.getElementById("b-orange").value;
+            var red = parseInt(color.substr(1, 2), 16);
+            var green = parseInt(color.substr(3, 2), 16);
+            var blue = parseInt(color.substr(5, 2), 16);
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/color?r=" + red + "&g=" + green + "&b=" + blue, true);
+            xhr.send();
+        }
+
+        function updateColor_yellow() {
+            var color = document.getElementById("b-yellow").value;
+            var red = parseInt(color.substr(1, 2), 16);
+            var green = parseInt(color.substr(3, 2), 16);
+            var blue = parseInt(color.substr(5, 2), 16);
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/color?r=" + red + "&g=" + green + "&b=" + blue, true);
+            xhr.send();
+        }
+
+        function updateColor_green() {
+            var color = document.getElementById("b-green").value;
+            var red = parseInt(color.substr(1, 2), 16);
+            var green = parseInt(color.substr(3, 2), 16);
+            var blue = parseInt(color.substr(5, 2), 16);
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/color?r=" + red + "&g=" + green + "&b=" + blue, true);
+            xhr.send();
+        }
+
+        function updateColor_cyan() {
+            var color = document.getElementById("b-cyan").value;
+            var red = parseInt(color.substr(1, 2), 16);
+            var green = parseInt(color.substr(3, 2), 16);
+            var blue = parseInt(color.substr(5, 2), 16);
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/color?r=" + red + "&g=" + green + "&b=" + blue, true);
+            xhr.send();
+        }
+
+        function updateColor_blue() {
+            var color = document.getElementById("b-blue").value;
+            var red = parseInt(color.substr(1, 2), 16);
+            var green = parseInt(color.substr(3, 2), 16);
+            var blue = parseInt(color.substr(5, 2), 16);
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/color?r=" + red + "&g=" + green + "&b=" + blue, true);
+            xhr.send();
+        }
+
+        function updateColor_pink() {
+            var color = document.getElementById("b-pink").value;
+            var red = parseInt(color.substr(1, 2), 16);
+            var green = parseInt(color.substr(3, 2), 16);
+            var blue = parseInt(color.substr(5, 2), 16);
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/color?r=" + red + "&g=" + green + "&b=" + blue, true);
+            xhr.send();
+        }
+
+        function updateColor_purple() {
+            var color = document.getElementById("b-purple").value;
+            var red = parseInt(color.substr(1, 2), 16);
+            var green = parseInt(color.substr(3, 2), 16);
+            var blue = parseInt(color.substr(5, 2), 16);
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/color?r=" + red + "&g=" + green + "&b=" + blue, true);
+            xhr.send();
+        }
+
+        function updateColor_white() {
+            var color = document.getElementById("b-white").value;
+            var red = parseInt(color.substr(1, 2), 16);
+            var green = parseInt(color.substr(3, 2), 16);
+            var blue = parseInt(color.substr(5, 2), 16);
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/color?r=" + red + "&g=" + green + "&b=" + blue, true);
+            xhr.send();
+        }
+
+        
 
         function setBrightness(){
           var brightness = document.getElementById('brightness').value;
@@ -170,16 +306,18 @@ const char* index_css = R"css(
     --yellow: #FAD717;
     --green: #00BA71;
     --cyan: #00C2DE;
-    --blue: #00418D;
+    --blue: #005ec9;
     --pink: #ff3ae1;
-    --purple: #5F2879;
+    --purple: #71129c;
+    --button_radius: 20px;
+    --button_size: 90px;
+    --button_scale_hover: 1.05;
 }
 /*------ALL FILE------*/
 * {
     margin: 0;
     padding: 0;
     font-family: Tahoma, sans-serif;
-    color: white;
     transition: all 0.2s ease;
     scroll-behavior: smooth;
 }
@@ -226,11 +364,12 @@ header {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    padding-top: var(--nav-padding);
+    /* padding-top: var(--nav-padding); */
     padding-bottom: var(--nav-padding);
     justify-content: space-around;
     align-items: baseline;
 } header a { /* LOGO */
+    color: white;
     text-decoration: none;
 } header a img {
     width: 220px;
@@ -262,8 +401,8 @@ header {
     right: 0;
     bottom: 0;
     background-color: rgba(255, 255, 255, 0.15);
-    -webkit-transition: 1s;
-    transition: 1s;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
     border-radius: 30px;
 }
 .slider:before {
@@ -274,8 +413,8 @@ header {
     left: 4px;
     bottom: 3px;
     background-color: white;
-    -webkit-transition: 1s;
-    transition: 1s;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
     border-radius: 50%;
 }
 input:checked + .slider {
@@ -332,6 +471,7 @@ nav { /* NAVBAR BOX */
     align-items: center;
     /* border: 2px solid black; */
 }.page1 h1 {
+    color: white;
     font-size: 1580%;
     /* border: 1px solid black; */
     word-break: break-all;
@@ -341,6 +481,7 @@ nav { /* NAVBAR BOX */
     line-height: 200px;
     width: 50%;
 }.page1 h2 {
+    color: white;
     font-size: 380%;
     letter-spacing: 16px;
     display: inline;
@@ -369,7 +510,7 @@ nav { /* NAVBAR BOX */
     -webkit-appearance: slider-vertical;
     height: 350px;
     width: 0.1px;
-    border: 2px solid rgb(200, 23, 23);
+    /*border: 2px solid rgb(200, 23, 23);*/
 }
 
 /*------PAGE 2------*/
@@ -379,6 +520,7 @@ nav { /* NAVBAR BOX */
     align-items: center;
     padding: 2%;
     /* border: 2px solid rgb(200, 23, 23); */
+    color: black;
     /* box-shadow: 0px -20px 40px rgba(0, 0, 0, 0.5); */
 }.page2 h2 {
     background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),url(wallpaper.jpg);
@@ -392,8 +534,117 @@ nav { /* NAVBAR BOX */
     letter-spacing: 30px;
     display: inline;
     writing-mode: vertical-lr;
-    margin-right: 20%;
-    /* text-align: left; */
+    /* margin-right: 2%; */
+    /*border: 2px solid rgb(23, 200, 200);*/
+    /* text-align: right; */
+}.page2 h3 {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),url(wallpaper.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    color: white;
+    padding: 2%;
+    border-radius: 20px;
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    font-size: 600%;
+    letter-spacing: 20px;
+    /* width: 100%; */
+    text-align: center;
+}#colors_and_animations {
+    /* height: 75vh; */
+    width: 90%;
+    display: flex;
+    flex-wrap: wrap;
+    /* justify-content: space-around; */
+    /*border: 2px solid rgb(23, 200, 23);*/
+}#colors {
+    /*border: 2px solid rgb(159, 23, 200);*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+}#colors_choices {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    width: 70%;
+}#colors_choices button {
+    /* display: flex; */
+    color: white;
+    /* flex-wrap: wrap; */
+    /* justify-content: center; */
+    width: 100%;
+    /*border: 1px solid black; */
+    width: var(--button_size);
+    height: var(--button_size);
+    border-radius: var(--button_radius);
+    border: 0;
+    margin: 3%;
+    cursor: pointer;
+    box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
+    font-size: 200%;
+}#colors_choices button:hover {
+    transform: scale(var(--button_scale_hover));
+    box-shadow: 0px 10px 20px 2px rgba(0, 0, 0, 0.25);
+}
+#b-red {
+    background-color: var(--red);
+}
+#b-orange {
+    background-color: var(--orange);
+}
+#b-yellow {
+    background-color: var(--yellow);
+}
+#b-green {
+    background-color: var(--green);
+}
+#b-cyan {
+    background-color: var(--cyan);
+}
+#b-blue {
+    background-color: var(--blue);
+}
+#b-pink {
+    background-color: var(--pink);
+}
+#b-purple {
+    background-color: var(--purple);
+}
+
+#animations {
+    /*border: 2px solid rgb(23, 23, 200);*/
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 49%;
+}#animations_choices {
+    /*border: 2px solid rgb(23, 200, 32);*/
+    display: flex;
+    flex-wrap: wrap;
+    /* justify-content: space-evenly; */
+    width: 100%;
+}#animations_choices button{
+    /* display: flex; */
+    /* color: white; */
+    /* flex-wrap: wrap; */
+    /* justify-content: center; */
+    width: 45%;
+    /*border: 1px solid black; */
+    /* width: 50%; */
+    /* height: var(--button_size); */
+    border-radius: var(--button_radius);
+    border: 0;
+    margin: 3%;
+    cursor: pointer;
+    box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
+    /* border: 2px solid rgb(200, 23, 23); */
+    font-size: 200%;
+}#animations_choices button:hover {
+    transform: scale(var(--button_scale_hover));
+    box-shadow: 0px 10px 20px 2px rgba(0, 0, 0, 0.25);
 }
 
 /*------TRANSITION------*/
@@ -440,6 +691,7 @@ nav { /* NAVBAR BOX */
 /*------FOOTER------*/
 footer {
     height: 20vh;
+    color: white;
     background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),url(wallpaper.jpg);
     background-position: center;
     background-repeat: no-repeat;
@@ -504,8 +756,8 @@ void setup() {
   server.on("/brightness", setBrightness);
   server.on("/switchState", on_off);
 
-  /*server.on("/color", handleColor);
-  server.on("/animation", handleAnimation);
+  server.on("/color", handleColor);
+  /*server.on("/animation", handleAnimation);
   server.on("/brightness", setBrightness);
   server.on("/eteindre", set_extinction);*/
 
@@ -530,8 +782,6 @@ void loop() {
     extinction = 0;
   }
 }
-
-
 
 
 
