@@ -313,6 +313,7 @@ nav { /* NAVBAR BOX */
 }
 #b-red {
     background-color: var(--red);
+    color: transparent;
 }
 #b-orange {
     background-color: var(--orange);
