@@ -96,7 +96,7 @@ const char* index_html = R"html(
                     <button><input type="button" value="#fff" onclick="updateColor_white()" id="b-white"></button>
                     <button><input type="button" value="#fff" onclick="updateColor_white()" id="b-white"></button>
                     <button><input type="button" value="#fff" onclick="updateColor_white()" id="b-white"></button>
-                    <button><input type="color" value="#000000" id="color-picker" onchange="updateColor()"></button>
+                    <button><input type="color" value="#000000" id="color-picker" onclick="updateColor()"></button>
                 </div>
             </div>
             <div id="animations">
@@ -631,6 +631,11 @@ nav { /* NAVBAR BOX */
 }
 #b-purple {
     background-color: var(--purple);
+    color: transparent;
+}
+
+#b-white {
+    background-color: var(--white);
     color: transparent;
 }
 #animations {
