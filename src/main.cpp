@@ -737,16 +737,17 @@ void handleLogo();
 void handleTitle();
 void handleWallpaper();
 void on_off();
+//void handleAnimation();
 
+void setBrightness();
 void handleColor();
 void setLedColor(int r, int g, int b);
-void handleAnimation();
-void setBrightness();
-void setAnimation(int mode);
-void set_extinction();
-void pride();
-void va_et_vient();
-void arc_en_ciel();
+
+//void setAnimation(int mode);
+//void set_extinction();
+//void pride();
+//void va_et_vient();
+//void arc_en_ciel();
 
 
 
@@ -782,7 +783,6 @@ void setup() {
 
   server.on("/color", handleColor);
   /*server.on("/animation", handleAnimation);
-  server.on("/brightness", setBrightness);
   server.on("/eteindre", set_extinction);*/
 
   // Démarrage du serveur web
@@ -868,13 +868,6 @@ void setLedColor(int r, int g, int b) {
   FastLED.show();
 }
 
-// Route pour définir l'animation des LEDs
-void handleAnimation() {
-  int mode = server.arg("mode").toInt();
-  setAnimation(mode);
-  server.send(200, "text/plain", "Animation définie !");
-}
-
 void setBrightness(){
     //fill_solid(leds, NUM_LEDS, CRGB(255, 0, 0));
     brightness = server.arg("brightness").toInt();
@@ -887,8 +880,15 @@ void setBrightness(){
     server.send(200, "text/plain", "Luminosité définies !"); 
 }
 
+// Route pour définir l'animation des LEDs
+/*void handleAnimation() {
+  int mode = server.arg("mode").toInt();
+  setAnimation(mode);
+  server.send(200, "text/plain", "Animation définie !");
+}*/
+
 // Fonction pour définir l'animation des LEDs
-void setAnimation(int mode) {
+/*void setAnimation(int mode) {
   animationMode = mode;
   // Ajoutez ici le code pour démarrer l'animation souhaitée
 
@@ -982,4 +982,4 @@ void pride() {
     
     nblend( leds[pixelnumber], newcolor, 64);
   }
-}
+}*/
