@@ -92,11 +92,11 @@ const char* index_html = R"html(
                     <button><input type="button" value="#005ec9" onclick="updateColor_blue()" id="b-blue"></button>
                     <button><input type="button" value="#ff3ae1" onclick="updateColor_pink()" id="b-pink"></button>
                     <button><input type="button" value="#71129c" onclick="updateColor_purple()" id="b-purple"></button>
-                    <button><input type="button" value="#fff" onclick="updateColor_white()" id="b-white"></button>
-                    <button><input type="button" value="#fff" onclick="updateColor_white()" id="b-white"></button>
-                    <button><input type="button" value="#fff" onclick="updateColor_white()" id="b-white"></button>
-                    <button><input type="button" value="#fff" onclick="updateColor_white()" id="b-white"></button>
-                    <button><input type="color" value="#000000" id="color-picker" onclick="updateColor()"></button>
+                    <button><input type="button" value="#FFFFFF" onclick="updateColor_white()" id="b-white"></button>
+                    <button><input type="button" value="#FFFFFF" onclick="updateColor_white()" id="b-white"></button>
+                    <button><input type="button" value="#FFFFFF" onclick="updateColor_white()" id="b-white"></button>
+                    <button><input type="button" value="#FFFFFF" onclick="updateColor_white()" id="b-white"></button>
+                    <button><input type="color" value="#FF0000" id="color-picker" onclick="updateColor()"></button>
                 </div>
             </div>
             <div id="animations">
