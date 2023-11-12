@@ -12,7 +12,7 @@
         <div>
             <a href="#home"><img src="./img/titleWhite.png" alt="Max & Flo"></a>
             <label class="switch">
-                <input type="checkbox" id="switch_on_off" onclick="checkbox_function()">
+                <input type="checkbox" id="switch_on_off" onclick="checkbox_status()">
                 <span class="slider round"></span>
             </label>
         </div>
@@ -24,9 +24,6 @@
             </ul>
         </nav>
     </header>
-
-
-
     <div class="page1" id="home">
         <div class="neonControl">
             <h1>NEON</h1>
@@ -35,14 +32,11 @@
         <div class="luminosity">
             <h2>LUMINOSITY</h2>
             <div>
-                <input type="range" min="0" max="100" value="50" step="1" id="slider">
+                <input type="range" min="1" max="100" value='%d' step="1" id="brightness">
                 <div id="number" class="neonTextWhite">50</div>
             </div>
         </div>
     </div>
-
-
-
     <div class="page2" id="lights">
         <h2>Lights</h2>
         <div id="colors_and_animations">
@@ -61,44 +55,35 @@
                     <button type="button" id="b-white"></button>
                     <button type="button" id="b-white"></button>
                     <button type="button" id="b-white"></button>
-                    <button type="button" id="b-red"></button>
+                    <button><input type="color" value="#000000" id="color-picker"></button>
                 </div>
             </div>
             <div id="animations">
                 <h3>FLOWS</h3><br><br>
                 <div id="animations_choices">
-                    <button type="button" id="nom_du_flow">test</button>
-                    <button type="button" id="nom_du_flow">test</button>
-                    <button type="button" id="nom_du_flow">test</button>
-                    <button type="button" id="nom_du_flow">test</button>
-                    <button type="button" id="nom_du_flow">test</button>
-                    <button type="button" id="nom_du_flow">test</button>
+                    <button type="button" id="nom_du_flow">nom_du_flow</button>
+                    <button type="button" id="nom_du_flow">nom_du_flow</button>
+                    <button type="button" id="nom_du_flow">nom_du_flow</button>
+                    <button type="button" id="nom_du_flow">nom_du_flow</button>
+                    <button type="button" id="nom_du_flow">nom_du_flow</button>
+                    <button type="button" id="nom_du_flow">nom_du_flow</button>
                 </div>
             </div>
         </div>
     </div>
-
-
-
     <div class="transition"></div>
-
-
-
     <div class="page3" id="timer">
         <h2>Timer</h2>
         <div>
             reste ici
         </div>
     </div>
-
-
-
     <footer>
-        <h3>Website developed by Max & flo</h3>
+        <h3>Website developped by Max & flo</h3>
         <p>Neon Control - v1</p>
     </footer>
     <script>
-        var slider = document.getElementById("slider");
+        var slider = document.getElementById("brightness");
         var number = document.getElementById("number");
         slider.oninput=function(){number.innerHTML = slider.value;}
 
@@ -115,7 +100,7 @@
             }
         });
 
-        function checkbox_function () {
+        function checkbox_status() {
             if (event.target.checked) {
                 slider.style.pointerEvents = "auto";
                 slider.disabled = false;
@@ -124,7 +109,6 @@
                 slider.disabled = true;
             }
         }
-
 
     </script>
 </body>

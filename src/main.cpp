@@ -53,7 +53,7 @@ const char* index_html = R"html(
         <div>
             <a href="#home"><img src="titleWhite.png" alt="Max & Flo"></a>
             <label class="switch">
-                <input type="checkbox" id="switch_on_off" onclick="checkbox_function()">
+                <input type="checkbox" id="switch_on_off" onclick="checkbox_status()">
                 <span class="slider round"></span>
             </label>
         </div>
@@ -65,9 +65,6 @@ const char* index_html = R"html(
             </ul>
         </nav>
     </header>
-
-
-
     <div class="page1" id="home">
         <div class="neonControl">
             <h1>NEON</h1>
@@ -76,66 +73,54 @@ const char* index_html = R"html(
         <div class="luminosity">
             <h2>LUMINOSITY</h2>
             <div>
-                <input type="range" onclick ='setBrightness()' min="1" max="100" value='%d' step="1" id="brightness">
+                <input type="range" onclick='setBrightness()' min="1" max="100" value='%d' step="1" id="brightness">
                 <div id="number" class="neonTextWhite">50</div>
             </div>
         </div>
     </div>
-
-
-
     <div class="page2" id="lights">
         <h2>Lights</h2>
         <div id="colors_and_animations">
             <div id="colors">
                 <h3>COLORS</h3><br><br>
                 <div id="colors_choices">
-                    <button type="button" onclick="updateColor_red" value="#F43545" id="b-red"></button>
-                    <button type="button" onclick="updateColor_orange" value="#FF8901" id="b-orange"></button>
-                    <button type="button" onclick="updateColor_yellow" value="#FAD717" id="b-yellow"></button>
-                    <button type="button" onclick="updateColor_green" value="#00BA71" id="b-green"></button>
-                    <button type="button" onclick="updateColor_cyan" value="#00C2DE" id="b-cyan"></button>
-                    <button type="button" onclick="updateColor_blue" value="#005ec9" id="b-blue"></button>
-                    <button type="button" onclick="updateColor_pink" value="#ff3ae1" id="b-pink"></button>
-                    <button type="button" onclick="updateColor_purple" value="#71129c" id="b-purple"></button>
-                    <button type="button" onclick="updateColor_white" value="#fff" id="b-white"></button>
-                    <button type="button" id="b-white"></button>
-                    <button type="button" id="b-white"></button>
-                    <button type="button" id="b-white"></button>
                     <button type="button" id="b-red"></button>
+                    <button type="button" id="b-orange"></button>
+                    <button type="button" id="b-yellow"></button>
+                    <button type="button" id="b-green"></button>
+                    <button type="button" id="b-cyan"></button>
+                    <button type="button" id="b-blue"></button>
+                    <button type="button" id="b-pink"></button>
+                    <button type="button" id="b-purple"></button>
+                    <button type="button" id="b-white"></button>
+                    <button type="button" id="b-white"></button>
+                    <button type="button" id="b-white"></button>
+                    <button type="button" id="b-white"></button>
+                    <button><input type="color" value="#000000" id="color-picker" onchange="updateColor()"></button>
                 </div>
             </div>
             <div id="animations">
                 <h3>FLOWS</h3><br><br>
                 <div id="animations_choices">
-                    <button type="button" id="nom_du_flow">test</button>
-                    <button type="button" id="nom_du_flow">test</button>
-                    <button type="button" id="nom_du_flow">test</button>
-                    <button type="button" id="nom_du_flow">test</button>
-                    <button type="button" id="nom_du_flow">test</button>
-                    <button type="button" id="nom_du_flow">test</button>
+                    <button type="button" id="nom_du_flow">nom_du_flow</button>
+                    <button type="button" id="nom_du_flow">nom_du_flow</button>
+                    <button type="button" id="nom_du_flow">nom_du_flow</button>
+                    <button type="button" id="nom_du_flow">nom_du_flow</button>
+                    <button type="button" id="nom_du_flow">nom_du_flow</button>
+                    <button type="button" id="nom_du_flow">nom_du_flow</button>
                 </div>
             </div>
         </div>
     </div>
-
-
-
     <div class="transition"></div>
-
-
-
     <div class="page3" id="timer">
         <h2>Timer</h2>
         <div>
             reste ici
         </div>
     </div>
-
-
-
     <footer>
-        <h3>Website developed by Max & flo</h3>
+        <h3>Website developped by Max & flo</h3>
         <p>Neon Control - v1</p>
     </footer>
     <script>
@@ -156,7 +141,7 @@ const char* index_html = R"html(
             }
         });
 
-        function checkbox_function () {
+        function checkbox_status() {
             if (event.target.checked) {
                 slider.style.pointerEvents = "auto";
                 slider.disabled = false;
@@ -164,6 +149,16 @@ const char* index_html = R"html(
                 slider.style.pointerEvents = "none";
                 slider.disabled = true;
             }
+        }
+
+        function updateColor() {
+            var color = document.getElementById("color-picker").value;
+            var red = parseInt(color.substr(1, 2), 16);
+            var green = parseInt(color.substr(3, 2), 16);
+            var blue = parseInt(color.substr(5, 2), 16);
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/color?r=" + red + "&g=" + green + "&b=" + blue, true);
+            xhr.send();
         }
 
 
@@ -309,6 +304,7 @@ const char* index_css = R"css(
     --blue: #005ec9;
     --pink: #ff3ae1;
     --purple: #71129c;
+    --white: #fff;
     --button_radius: 20px;
     --button_size: 90px;
     --button_scale_hover: 1.05;
@@ -364,6 +360,7 @@ header {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
+    z-index: 1;
     /* padding-top: var(--nav-padding); */
     padding-bottom: var(--nav-padding);
     justify-content: space-around;
@@ -510,7 +507,7 @@ nav { /* NAVBAR BOX */
     -webkit-appearance: slider-vertical;
     height: 350px;
     width: 0.1px;
-    /*border: 2px solid rgb(200, 23, 23);*/
+    /* border: 2px solid rgb(200, 23, 23); */
 }
 
 /*------PAGE 2------*/
@@ -535,7 +532,7 @@ nav { /* NAVBAR BOX */
     display: inline;
     writing-mode: vertical-lr;
     /* margin-right: 2%; */
-    /*border: 2px solid rgb(23, 200, 200);*/
+    /* border: 2px solid rgb(23, 200, 200); */
     /* text-align: right; */
 }.page2 h3 {
     background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),url(wallpaper.jpg);
@@ -543,14 +540,15 @@ nav { /* NAVBAR BOX */
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
-    color: white;
-    padding: 2%;
-    border-radius: 20px;
+    /* color: white; */
+    /* padding: 2%; */
+    /* height: 15vh; */
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
     font-size: 600%;
-    letter-spacing: 20px;
+    letter-spacing: 10px;
     /* width: 100%; */
+    /* border: 2px solid rgb(179, 200, 23); */
     text-align: center;
 }#colors_and_animations {
     /* height: 75vh; */
@@ -558,9 +556,9 @@ nav { /* NAVBAR BOX */
     display: flex;
     flex-wrap: wrap;
     /* justify-content: space-around; */
-    /*border: 2px solid rgb(23, 200, 23);*/
+    /* border: 2px solid rgb(23, 200, 23); */
 }#colors {
-    /*border: 2px solid rgb(159, 23, 200);*/
+    /* border: 2px solid rgb(159, 23, 200); */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -570,13 +568,15 @@ nav { /* NAVBAR BOX */
     flex-wrap: wrap;
     justify-content: space-evenly;
     width: 70%;
+    /* border: 2px solid rgb(159, 23, 200); */
 }#colors_choices button {
-    /* display: flex; */
+    display: flex;
     color: white;
+    align-items: center;
     /* flex-wrap: wrap; */
-    /* justify-content: center; */
+    justify-content: center;
     width: 100%;
-    /*border: 1px solid black; */
+    border: 1px solid black; 
     width: var(--button_size);
     height: var(--button_size);
     border-radius: var(--button_radius);
@@ -584,10 +584,22 @@ nav { /* NAVBAR BOX */
     margin: 3%;
     cursor: pointer;
     box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
-    font-size: 200%;
+    /* font-size: 200%; */
+    overflow: hidden;
 }#colors_choices button:hover {
     transform: scale(var(--button_scale_hover));
     box-shadow: 0px 10px 20px 2px rgba(0, 0, 0, 0.25);
+}
+#colors_choices button input {
+    width: 100px;
+    height: 100px;
+    border: 0;
+    /* padding: -10px; */
+    /* border-radius: 20px; */
+    transform: scale(1.1);
+    /* padding: 0; */
+    cursor: pointer;
+    /* -webkit-appearance: none; */
 }
 #b-red {
     background-color: var(--red);
@@ -613,35 +625,37 @@ nav { /* NAVBAR BOX */
 #b-purple {
     background-color: var(--purple);
 }
-
 #animations {
-    /*border: 2px solid rgb(23, 23, 200);*/
+    /* border: 2px solid rgb(23, 23, 200); */
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    width: 49%;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
+    width: 50%;
 }#animations_choices {
-    /*border: 2px solid rgb(23, 200, 32);*/
+    /* border: 2px solid rgb(23, 200, 32); */
     display: flex;
     flex-wrap: wrap;
-    /* justify-content: space-evenly; */
-    width: 100%;
+    justify-content: space-evenly;
+    width: 70%;
 }#animations_choices button{
     /* display: flex; */
     /* color: white; */
     /* flex-wrap: wrap; */
     /* justify-content: center; */
-    width: 45%;
-    /*border: 1px solid black; */
+    /* width: 45%; */
+    border: 1px solid black; 
     /* width: 50%; */
-    /* height: var(--button_size); */
+    height: var(--button_size);
     border-radius: var(--button_radius);
     border: 0;
     margin: 3%;
+    padding: 4%;
     cursor: pointer;
     box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
     /* border: 2px solid rgb(200, 23, 23); */
-    font-size: 200%;
+    font-size: 150%;
 }#animations_choices button:hover {
     transform: scale(var(--button_scale_hover));
     box-shadow: 0px 10px 20px 2px rgba(0, 0, 0, 0.25);
@@ -672,6 +686,8 @@ nav { /* NAVBAR BOX */
     align-items: center;
     padding: 2%;
     /* border: 2px solid rgb(200, 23, 23); */
+    color: black;
+    /* box-shadow: 0px -20px 40px rgba(0, 0, 0, 0.5); */
 }.page3 h2 {
     background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),url(wallpaper.jpg);
     background-position: center;
