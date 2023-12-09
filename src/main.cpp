@@ -36,6 +36,7 @@ double temps2 = 0;
 //changer href css -> style.css
 //changer href icon -> logo.jpg
 //changer src img -> titleWhite.png
+//changer background -> wallpaper.jpg
 
 // Déclaration de la variable contenant le code HTML
 const char* index_html = R"html(
@@ -115,10 +116,33 @@ const char* index_html = R"html(
     <div class="transition"></div>
     <div class="page3" id="timer">
         <h2>Timer</h2>
-        <div>
-            reste ici
+        <div class="page3_2">
+            <div class="clock-container">
+                <div class="clock-col">
+                    <p contenteditable="true" id="clock-day" class="clock-day clock-timer">00</p>
+                    <p class="clock-label">Day</p>
+                </div>
+                <div class="clock-col">
+                    <p contenteditable="true" id="clock-hours" class="clock-hours clock-timer">00</p>
+                    <p class="clock-label">Hours</p>
+                </div>
+                <div class="clock-col">
+                    <p contenteditable="true" id="clock-minutes" class="clock-minutes clock-timer">00</p>
+                    <p class="clock-label">Minutes</p>
+                </div>
+                <div class="clock-col">
+                    <p contenteditable="true" id="clock-seconds" class="clock-seconds clock-timer">00</p>
+                    <p class="clock-label">Seconds</p>
+                </div>
+            </div>
+
+            <div class="button-container">
+                <button id="start-timer" class="start-button">Start</button>
+                <button id="stop-timer" class="start-button" >Stop</button>
+            </div>
         </div>
     </div>
+
     <footer>
         <h3>Website developped by Max & flo</h3>
         <p>Neon Control - v1</p>
@@ -262,7 +286,6 @@ const char* index_html = R"html(
           //2.48*x + 7.52;
           brightness = Math.round(2.48 * brightness + 7.52);
 
-          
           xhr.open("GET", '/brightness?brightness=' + brightness, true);
           xhr.send();
         }
@@ -282,6 +305,119 @@ const char* index_html = R"html(
             xhr.send();
 
         });
+
+
+        //----------------TIMER---------------------------
+
+        let timerInterval; // Variable pour l'intervalle du compte à rebours
+        let longPressTimer; // Timer pour détecter un appui long
+        let isLongPress = false; // Flag pour identifier un appui long
+
+        document.getElementById('stop-timer').style.display = 'none';
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const startButton = document.getElementById('start-timer');
+            const stopButton = document.getElementById('stop-timer');
+
+            startButton.addEventListener('click', startCountdown);
+
+            stopButton.addEventListener('mousedown', function() {
+                isLongPress = false;
+                longPressTimer = setTimeout(function() {
+                    isLongPress = true;
+                    resetTimerDisplay();
+                    stopCountdown();
+                    document.getElementById('stop-timer').style.display = 'none';
+                }, 1000); // Durée d'appui long (1 seconde)
+            });
+
+            stopButton.addEventListener('mouseup', function() {
+                clearTimeout(longPressTimer);
+                if (!isLongPress) {
+                    stopCountdown();
+                }
+            });
+
+            stopButton.addEventListener('mouseleave', function() {
+                clearTimeout(longPressTimer);
+            });
+
+            function startCountdown() {
+                let days = parseInt(document.getElementById('clock-day').textContent) || 0;
+                let hours = parseInt(document.getElementById('clock-hours').textContent) || 0;
+                let minutes = parseInt(document.getElementById('clock-minutes').textContent) || 0;
+                let seconds = parseInt(document.getElementById('clock-seconds').textContent) || 0;
+
+                setEditable(false);
+
+                let countdownTime = (days * 24 * 60 * 60) + (hours * 60 * 60) + (minutes * 60) + seconds;
+
+                updateTimerDisplay(countdownTime);
+                timerInterval = setInterval(() => {
+                    if (countdownTime > 0) {
+                        countdownTime--;
+                        updateTimerDisplay(countdownTime);
+                    } else {
+                        finishCountdown();
+                    }
+                }, 1000);
+
+                document.getElementById('stop-timer').style.display = 'inline-block';
+            }
+
+            function stopCountdown() {
+                clearInterval(timerInterval);
+                setEditable(true);
+                /*document.getElementById('stop-timer').style.display = 'none';*/
+            }
+
+            function resetTimerDisplay() {
+                document.getElementById('clock-day').textContent = '00';
+                document.getElementById('clock-hours').textContent = '00';
+                document.getElementById('clock-minutes').textContent = '00';
+                document.getElementById('clock-seconds').textContent = '00';
+
+                document.documentElement.style.setProperty('--timer-day', "00");
+                document.documentElement.style.setProperty('--timer-hours', "00");
+                document.documentElement.style.setProperty('--timer-minutes', "00");
+                document.documentElement.style.setProperty('--timer-seconds', "00");
+            }
+
+            function setEditable(isEditable) {
+                document.getElementById('clock-day').contentEditable = isEditable;
+                document.getElementById('clock-hours').contentEditable = isEditable;
+                document.getElementById('clock-minutes').contentEditable = isEditable;
+                document.getElementById('clock-seconds').contentEditable = isEditable;
+            }
+
+            function updateTimerDisplay(time) {
+                let d = Math.floor(time / (24 * 60 * 60));
+                let h = Math.floor((time % (24 * 60 * 60)) / (60 * 60));
+                let m = Math.floor((time % (60 * 60)) / 60);
+                let s = time % 60;
+
+                document.getElementById('clock-day').textContent = d < 10 ? '0' + d : d;
+                document.getElementById('clock-hours').textContent = h < 10 ? '0' + h : h;
+                document.getElementById('clock-minutes').textContent = m < 10 ? '0' + m : m;
+                document.getElementById('clock-seconds').textContent = s < 10 ? '0' + s : s;
+            }
+
+            function finishCountdown() {
+                clearInterval(timerInterval);
+                //alert('Countdown finished!');
+                setEditable(true);
+                document.getElementById('stop-timer').style.display = 'none';
+
+                //checkbox_status();
+                document.getElementById('switch_on_off').checked = false;
+                
+                var switchState = 0;
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", '/switchState?switchState=' + switchState, true);
+                xhr.send();
+            }
+        });
+
     </script>
 </body>
 </html>
@@ -506,7 +642,7 @@ nav { /* NAVBAR BOX */
 }input[type="range"]{
     -webkit-appearance: slider-vertical;
     height: 350px;
-    width: 0.1px;
+    width: 5px;
     /* border: 2px solid rgb(200, 23, 23); */
 }
 
@@ -638,6 +774,7 @@ nav { /* NAVBAR BOX */
     background-color: var(--white);
     color: transparent;
 }
+
 #animations {
     /* border: 2px solid rgb(23, 23, 200); */
     display: flex;
@@ -733,6 +870,144 @@ footer {
     justify-content: center;
     align-items: center;
     /* border: 2px solid rgb(200, 23, 23); */
+}
+
+
+/*----------------TIMER---------------------------*/
+
+.clock-day:before {
+    content: var(--timer-day);
+}
+.clock-hours:before {
+    content: var(--timer-hours);
+}
+.clock-minutes:before {
+    content: var(--timer-minutes);
+}
+.clock-seconds:before {
+    content: var(--timer-seconds);
+}
+
+.page3_2 {
+    /*background: linear-gradient(45deg, #1870ed 0, #f18f88 100%);*/
+    font-family: 'Montserrat', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.clock-container {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    background-color: #080808;
+    /*background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),url(wallpaper.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;*/
+
+
+    /*border-radius: 20px;*/
+    border-radius: var(--button_radius);
+    padding: 60px 20px;
+    /*box-shadow: 1px 1px 5px rgba(255, 255, 255, .15), 0 15px 90px 30px rgba(0, 0, 0, .25);*/
+    box-shadow: 0px 10px 20px 2px rgba(0, 0, 0, 0.5);
+    display: flex;
+}
+
+.clock-col {
+    text-align: center;
+    margin-right: 40px;
+    margin-left: 40px;
+    min-width: 90px;
+    position: relative;
+    
+}
+
+.clock-col:not(:last-child):before,
+.clock-col:not(:last-child):after {
+    content: "";
+    background-color: rgba(255, 255, 255, .3);
+    height: 5px;
+    width: 5px;
+    border-radius: 50%;
+    display: block;
+    position: absolute;
+    right: -42px;
+}
+
+.clock-col:not(:last-child):before {
+    top: 35%;
+}
+
+.clock-col:not(:last-child):after {
+    top: 50%;
+}
+
+.clock-timer {
+    color: white;
+    font-size: 10rem;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.clock-timer:before {
+    font-size: 4.2rem;
+    text-transform: uppercase;
+}
+
+.clock-label {
+    color: rgba(255, 255, 255, .35);
+    text-transform: uppercase;
+    font-size: .7rem;
+    margin-top: 10px;
+}
+
+@media (max-width: 825px) {
+    .clock-container {
+        flex-direction: column;
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+    .clock-col + .clock-col {
+        margin-top: 20px;
+    }
+    .clock-col:before,
+    .clock-col:after {
+        display: none !important;
+    }
+}
+
+.button-container {
+    text-align: center;
+    width: 100%; /* Utilise la largeur totale pour le centrage */
+    margin-top: -1rem; /* Ajuste la marge au-dessus du bouton */
+    /*margin-bottom: 2rem; /* Ajuste la marge en dessous du bouton, si nécessaire */
+}
+
+.start-button {
+    background-color: #000000; /* Choisir une couleur de fond */
+    color: #ffffff; /* Choisir une couleur de texte */
+    border: 2px solid #000000; /* Choisir une couleur de bordure */
+    padding: 10px 20px; /* Ajuster le rembourrage pour la taille du bouton */
+    font-size: 2rem; /* Ajuster la taille de la police */
+    /*border-radius: 5px; /* Rayon de la bordure pour les coins arrondis */
+    border-radius: var(--button_radius);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Ombre optionnelle pour la profondeur */
+    cursor: pointer; /* Curseur de pointeur pour indiquer la fonctionnalité cliquable */
+    transition: background-color 0.3s, color 0.3s; /* Transition pour les interactions hover et click */
+}
+
+.start-button:hover {
+    background-color: #ffffff; /* Couleur de fond au survol */
+    color: #000000; /* Couleur de texte au survol */
+    
+}
+
+.start-button:active {
+    transform: translateY(2px); /* Effet de pression du bouton */
 }
 )css";
 
