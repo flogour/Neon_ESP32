@@ -11,7 +11,7 @@ const char* password = "tAdwttJtCdKjhiZaY6";
 
 // Paramètres du ruban LED
 #define LED_PIN 27  // Broche de contrôle du ruban LED
-#define NUM_LEDS 500  // Nombre de LEDs dans le ruban
+#define NUM_LEDS 222  // Nombre de LEDs dans le ruban
 CRGB leds[NUM_LEDS];
 
 // Création de l'objet serveur web
